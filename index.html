@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacOS 16 x HyperOS 3 - StarYAM Edition</title>
+    <style>
+        /* Reset et variables globales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-card: rgba(30, 30, 30, 0.8);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #007AFF;
+            --accent-orange: #FF6900;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 122, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 105, 0, 0.1) 0%, transparent 50%);
+        }
+
+        /* Barre de menu supérieure */
+        .menu-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 3000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .menu-left {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .menu-item {
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover {
+            color: var(--accent-blue);
+        }
+
+        .logo {
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        /* Contenu principal */
+        .main-content {
+            margin-top: 28px;
+            padding: 40px 20px 100px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Spotlight Search */
+        .spotlight-container {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .spotlight-search {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 25px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 16px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .spotlight-search:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+        }
+
+        /* Carte des spécifications */
+        .specs-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .specs-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+        }
+
+        .spec-value {
+            font-weight: 500;
+        }
+
+        /* Section Applications */
+        .apps-section {
+            margin-bottom: 40px;
+        }
+
+        .apps-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-blue);
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .app-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Fenêtre d'application améliorée */
+        .app-window {
+            position: fixed;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: none;
+            overflow: hidden;
+            z-index: 2000;
+            resize: both;
+            min-width: 400px;
+            min-height: 300px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-window.active {
+            display: block;
+            animation: windowOpen 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-window.minimizing {
+            animation: windowMinimize 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .app-window.maximized {
+            top: 28px !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: calc(100vh - 28px) !important;
+            border-radius: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes windowOpen {
+            from {
+                transform: scale(0.8) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes windowMinimize {
+            to {
+                transform: scale(0.2) translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .app-window-header {
+            background: rgba(40, 40, 40, 0.95);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
+            cursor: move;
+            user-select: none;
+        }
+
+        .app-window-title {
+            font-size: 14px;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+        .app-window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .window-control:hover {
+            transform: scale(1.1);
+        }
+
+        .close-btn {
+            background: #FF5F57;
+        }
+
+        .close-btn:hover {
+            background: #FF3B30;
+        }
+
+        .minimize-btn {
+            background: #FFBD2E;
+        }
+
+        .minimize-btn:hover {
+            background: #FFA500;
+        }
+
+        .maximize-btn {
+            background: #28CA42;
+        }
+
+        .maximize-btn:hover {
+            background: #00C850;
+        }
+
+        .app-window-content {
+            padding: 30px;
+            height: calc(100% - 53px);
+            overflow-y: auto;
+        }
+
+        /* Poignées de redimensionnement */
+        .resize-handle {
+            position: absolute;
+            background: transparent;
+        }
+
+        .resize-handle-n {
+            top: 0;
+            left: 10px;
+            right: 10px;
+            height: 5px;
+            cursor: ns-resize;
+        }
+
+        .resize-handle-e {
+            top: 10px;
+            right: 0;
+            bottom: 10px;
+            width: 5px;
+            cursor: ew-resize;
+        }
+
+        .resize-handle-s {
+            bottom: 0;
+            left: 10px;
+            right: 10px;
+            height: 5px;
+            cursor: ns-resize;
+        }
+
+        .resize-handle-w {
+            top: 10px;
+            left: 0;
+            bottom: 10px;
+            width: 5px;
+            cursor: ew-resize;
+        }
+
+        .resize-handle-ne {
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            cursor: nesw-resize;
+        }
+
+        .resize-handle-se {
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            cursor: nwse-resize;
+        }
+
+        .resize-handle-sw {
+            bottom: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            cursor: nesw-resize;
+        }
+
+        .resize-handle-nw {
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            cursor: nwse-resize;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            z-index: 1500;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Section Gemini AI */
+        .gemini-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gemini-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #4285F4, #EA4335);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gemini-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gemini-input {
+            flex: 1;
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .gemini-input:focus {
+            outline: none;
+            border-color: #4285F4;
+        }
+
+        .gemini-button {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #4285F4, #EA4335);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gemini-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(66, 133, 244, 0.4);
+        }
+
+        .gemini-response {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Dock */
+        .dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 2500;
+        }
+
+        .dock-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .dock-item:hover {
+            transform: translateY(-10px) scale(1.2);
+        }
+
+        .dock-item.has-window::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Contrôles audio */
+        .audio-controls {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .audio-controls:hover {
+            opacity: 1;
+        }
+
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .audio-controls button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .dock {
+                gap: 5px;
+                padding: 8px;
+            }
+            
+            .dock-item {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .app-window {
+                min-width: 300px;
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Musique de fond avec contrôles -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://raw.githubusercontent.com/AdelWolf5/super-marques-fusion/refs/heads/main/Windows%20Error%20Remix.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Contrôles audio -->
+    <div class="audio-controls">
+        <button onclick="toggleMusic()" id="playPauseBtn">▶️</button>
+        <span style="font-size: 12px;">Musique</span>
+    </div>
+
+    <!-- Barre de menu -->
+    <div class="menu-bar">
+        <div class="menu-left">
+            <span class="menu-item logo">⭐ StarYAM</span>
+            <span class="menu-item">Finder</span>
+            <span class="menu-item">Fichier</span>
+            <span class="menu-item">Édition</span>
+            <span class="menu-item">Affichage</span>
+            <span class="menu-item">HyperOS</span>
+        </div>
+        <div class="menu-right">
+            <span>🔋 100%</span>
+            <span id="clock">--:--</span>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <!-- Recherche Spotlight x HyperOS -->
+        <div class="spotlight-container fade-in">
+            <input type="text" class="spotlight-search" placeholder="🔍 Recherche Spotlight x HyperOS...">
+        </div>
+
+        <!-- Spécifications système -->
+        <div class="specs-card fade-in">
+            <h2 class="specs-title">Spécifications Système</h2>
+            <div class="spec-item">
+                <span class="spec-label">CPU</span>
+                <span class="spec-value">Apple M5 Ultra Fusion</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">GPU</span>
+                <span class="spec-value">RTX 6090 Super</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Carte mère</span>
+                <span class="spec-value">Xiaomi HyperBoard</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">OS</span>
+                <span class="spec-value">MacOS 16 + HyperOS 3</span>
+            </div>
+        </div>
+
+        <!-- Section Applications -->
+        <div class="apps-section fade-in">
+            <h2 class="apps-title">Applications</h2>
+            <div class="apps-grid">
+                <div class="app-card" onclick="openApp('Safari', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #007AFF, #5AC8FA);">🌐</div>
+                    <div class="app-name">Safari</div>
+                </div>
+                <div class="app-card" onclick="openApp('Mi Control', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #FF6900, #FFB800);">📱</div>
+                    <div class="app-name">Mi Control</div>
+                </div>
+                <div class="app-card" onclick="openApp('Final Cut Pro', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #B620E0, #F7B500);">🎬</div>
+                    <div class="app-name">Final Cut Pro</div>
+                </div>
+                <div class="app-card" onclick="openApp('HyperOS Settings', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #FF3B30, #FF9500);">⚙️</div>
+                    <div class="app-name">HyperOS Settings</div>
+                </div>
+                <div class="app-card" onclick="openApp('App Store', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #007AFF, #34C759);">📦</div>
+                    <div class="app-name">App Store</div>
+                </div>
+                <div class="app-card" onclick="openApp('MiShare', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #FF6900, #007AFF);">📤</div>
+                    <div class="app-name">MiShare</div>
+                </div>
+                <div class="app-card" onclick="openApp('Terminal', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #000000, #333333);">💻</div>
+                    <div class="app-name">Terminal</div>
+                </div>
+                <div class="app-card" onclick="openApp('Music', event)">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #FA2D48, #F95C87);">🎵</div>
+                    <div class="app-name">Music</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Gemini AI -->
+        <div class="gemini-section fade-in">
+            <h2 class="gemini-title">Assistant StarYAM AI</h2>
+            <div class="gemini-input-container">
+                <input type="text" class="gemini-input" id="geminiInput" placeholder="Essaye : salut, blague, système, aide, météo, starYAM...">
+                <button class="gemini-button" onclick="sendToGemini()">Envoyer</button>
+            </div>
+            <div class="gemini-response" id="geminiResponse">Bonjour ! Je suis l'assistant StarYAM AI. Demandez-moi n'importe quoi ! 🌟</div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Template de fenêtre d'application -->
+    <template id="windowTemplate">
+        <div class="app-window" data-app="">
+            <div class="resize-handle resize-handle-n"></div>
+            <div class="resize-handle resize-handle-e"></div>
+            <div class="resize-handle resize-handle-s"></div>
+            <div class="resize-handle resize-handle-w"></div>
+            <div class="resize-handle resize-handle-ne"></div>
+            <div class="resize-handle resize-handle-se"></div>
+            <div class="resize-handle resize-handle-sw"></div>
+            <div class="resize-handle resize-handle-nw"></div>
+            
+            <div class="app-window-header">
+                <div class="app-window-title">Application</div>
+                <div class="app-window-controls">
+                    <div class="window-control close-btn" onclick="closeApp(this)"></div>
+                    <div class="window-control minimize-btn" onclick="minimizeApp(this)"></div>
+                    <div class="window-control maximize-btn" onclick="maximizeApp(this)"></div>
+                </div>
+            </div>
+            <div class="app-window-content">
+                <!-- Le contenu de l'application sera injecté ici -->
+            </div>
+        </div>
+    </template>
+
+    <!-- Dock -->
+    <div class="dock" id="dock">
+        <div class="dock-item" style="background: linear-gradient(45deg, #007AFF, #5AC8FA);" onclick="openApp('Safari', event)" data-app="Safari">🌐</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #FF6900, #FFB800);" onclick="openApp('Mi Control', event)" data-app="Mi Control">📱</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #B620E0, #F7B500);" onclick="openApp('Final Cut Pro', event)" data-app="Final Cut Pro">🎬</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #000000, #333333);" onclick="openApp('Terminal', event)" data-app="Terminal">💻</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #FA2D48, #F95C87);" onclick="openApp('Music', event)" data-app="Music">🎵</div>
+    </div>
+
+    <script>
+        // Variables globales
+        let activeWindows = new Map();
+        let currentZIndex = 2000;
+        let isDragging = false;
+        let isResizing = false;
+        let currentWindow = null;
+        let startX = 0;
+        let startY = 0;
+        let startWidth = 0;
+        let startHeight = 0;
+        let windowStartX = 0;
+        let windowStartY = 0;
+
+        // Gestion de la musique
+        function toggleMusic() {
+            const music = document.getElementById('backgroundMusic');
+            const btn = document.getElementById('playPauseBtn');
+            
+            if (music.paused) {
+                music.play();
+                btn.textContent = '⏸️';
+            } else {
+                music.pause();
+                btn.textContent = '▶️';
+            }
+        }
+
+        // Horloge en temps réel
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Fonction pour obtenir le contenu de l'application
+        function getAppContent(appName) {
+            const contents = {
+                'Safari': `
+                    <div style="text-align: center; padding: 50px;">
+                        <h2 style="color: #007AFF; margin-bottom: 20px;">Safari - Navigateur Web</h2>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                            <input type="text" placeholder="Rechercher ou saisir une adresse web" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white;">
+                        </div>
+                        <p>Navigation rapide et sécurisée avec Safari sur MacOS 16 x HyperOS 3</p>
+                        <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">🔒</div>
+                                <div>Navigation privée</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">⚡</div>
+                                <div>Ultra rapide</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">🛡️</div>
+                                <div>Protection avancée</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'Mi Control': `
+                    <div style="text-align: center; padding: 50px;">
+                        <h2 style="color: #FF6900; margin-bottom: 20px;">Mi Control Center</h2>
+                        <p>Contrôlez tous vos appareils Xiaomi depuis une interface unifiée</p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px;">
+                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
+                                <div style="font-size: 40px; margin-bottom: 10px;">📱</div>
+                                <h3>Téléphone</h3>
+                                <p style="color: #a0a0a0; font-size: 14px;">Mi 14 Ultra connecté</p>
+                            </div>
+                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
+                                <div style="font-size: 40px; margin-bottom: 10px;">⌚</div>
+                                <h3>Montre</h3>
+                                <p style="color: #a0a0a0; font-size: 14px;">Mi Watch S3 active</p>
+                            </div>
+                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
+                                <div style="font-size: 40px; margin-bottom: 10px;">🏠</div>
+                                <h3>Maison</h3>
+                                <p style="color: #a0a0a0; font-size: 14px;">12 appareils connectés</p>
+                            </div>
+                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
+                                <div style="font-size: 40px; margin-bottom: 10px;">🎧</div>
+                                <h3>Audio</h3>
+                                <p style="color: #a0a0a0; font-size: 14px;">Buds Pro 2 connectés</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'Final Cut Pro': `
+                    <div style="padding: 30px;">
+                        <h2 style="background: linear-gradient(45deg, #B620E0, #F7B500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;">Final Cut Pro X</h2>
+                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; height: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 60px; margin-bottom: 20px;">🎬</div>
+                                <p>Espace de montage vidéo professionnel</p>
+                                <p style="color: #a0a0a0; font-size: 14px;">Glissez vos médias ici pour commencer</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px;">
+                            <button style="flex: 1; padding: 15px; background: linear-gradient(45deg, #B620E0, #F7B500); border: none; border-radius: 10px; color: white; cursor: pointer;">Nouveau Projet</button>
+                            <button style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; cursor: pointer;">Ouvrir Projet</button>
+                            <button style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; cursor: pointer;">Importer Média</button>
+                        </div>
+                    </div>
+                `,
+                'HyperOS Settings': `
+                    <div style="padding: 30px;">
+                        <h2 style="color: #FF6900; margin-bottom: 30px;">Paramètres HyperOS</h2>
+                        <div style="display: grid; gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <span style="font-size: 24px;">🔧</span>
+                                        <div>
+                                            <div style="font-weight: 500;">Général</div>
+                                            <div style="color: #a0a0a0; font-size: 12px;">Langue, région, accessibilité</div>
+                                        </div>
+                                    </div>
+                                    <span style="color: #a0a0a0;">›</span>
+                                </div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <span style="font-size: 24px;">🎨</span>
+                                        <div>
+                                            <div style="font-weight: 500;">Apparence</div>
+                                            <div style="color: #a0a0a0; font-size: 12px;">Thème, couleurs, animations</div>
+                                        </div>
+                                    </div>
+                                    <span style="color: #a0a0a0;">›</span>
+                                </div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <span style="font-size: 24px;">🔒</span>
+                                        <div>
+                                            <div style="font-weight: 500;">Sécurité & Confidentialité</div>
+                                            <div style="color: #a0a0a0; font-size: 12px;">Face ID, mots de passe, permissions</div>
+                                        </div>
+                                    </div>
+                                    <span style="color: #a0a0a0;">›</span>
+                                </div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <span style="font-size: 24px;">⚡</span>
+                                        <div>
+                                            <div style="font-weight: 500;">Performance</div>
+                                            <div style="color: #a0a0a0; font-size: 12px;">Mode turbo, économie d'énergie</div>
+                                        </div>
+                                    </div>
+                                    <span style="color: #a0a0a0;">›</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'App Store': `
+                    <div style="padding: 30px;">
+                        <h2 style="color: #007AFF; margin-bottom: 30px;">App Store</h2>
+                        <div style="background: linear-gradient(135deg, #007AFF, #34C759); border-radius: 15px; padding: 30px; margin-bottom: 30px; text-align: center;">
+                            <h3 style="font-size: 28px; margin-bottom: 10px;">Découvrez StarYAM Apps</h3>
+                            <p>Des applications exclusives pour MacOS 16 x HyperOS 3</p>
+                        </div>
+                        <h3 style="margin-bottom: 20px;">Applications populaires</h3>
+                        <div style="display: grid; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #FF6900, #FFB800); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">🚀</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500;">HyperBoost Pro</div>
+                                    <div style="color: #a0a0a0; font-size: 12px;">Optimisez vos performances</div>
+                                </div>
+                                <button style="padding: 8px 20px; background: #007AFF; border: none; border-radius: 20px; color: white; cursor: pointer;">Obtenir</button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #B620E0, #F7B500); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">✨</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500;">StarYAM Studio</div>
+                                    <div style="color: #a0a0a0; font-size: 12px;">Création et design avancé</div>
+                                </div>
+                                <button style="padding: 8px 20px; background: #007AFF; border: none; border-radius: 20px; color: white; cursor: pointer;">Obtenir</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'MiShare': `
+                    <div style="text-align: center; padding: 50px;">
+                        <h2 style="color: #FF6900; margin-bottom: 30px;">MiShare</h2>
+                        <div style="width: 200px; height: 200px; margin: 0 auto 30px; border: 3px dashed rgba(255,105,0,0.5); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                            <div>
+                                <div style="font-size: 60px; margin-bottom: 10px;">📤</div>
+                                <p>Glissez vos fichiers ici</p>
+                            </div>
+                        </div>
+                        <p style="margin-bottom: 30px;">Partagez instantanément avec vos appareils Xiaomi</p>
+                        <div style="display: flex; gap: 20px; justify-content: center;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">📱</div>
+                                <div>Mi 14 Ultra</div>
+                                <div style="color: #34C759; font-size: 12px;">● Connecté</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">💻</div>
+                                <div>Mi Book Pro</div>
+                                <div style="color: #a0a0a0; font-size: 12px;">● Hors ligne</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                                <div style="font-size: 30px; margin-bottom: 10px;">📱</div>
+                                <div>Mi Pad 6</div>
+                                <div style="color: #34C759; font-size: 12px;">● Connecté</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                'Terminal': `
+                    <div style="padding: 20px; font-family: 'SF Mono', Consolas, monospace; font-size: 14px; height: 100%;">
+                        <div style="color: #34C759; margin-bottom: 10px;">StarYAM Terminal v3.0 - MacOS 16 x HyperOS 3</div>
+                        <div style="color: #a0a0a0; margin-bottom: 20px;">Type 'help' for available commands</div>
+                        <div id="terminalOutput_${Date.now()}" style="margin-bottom: 20px; max-height: 300px; overflow-y: auto;">
+                            <div>Last login: ${new Date().toString()}</div>
+                            <div style="margin-top: 10px;">user@staryam-fusion ~ %</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <span style="color: #34C759;">user@staryam-fusion ~ % </span>
+                            <input type="text" id="terminalInput_${Date.now()}" style="flex: 1; background: transparent; border: none; color: white; outline: none; margin-left: 10px;" onkeypress="handleTerminalInput(event, this)">
+                        </div>
+                    </div>
+                `,
+                'Music': `
+                    <div style="text-align: center; padding: 50px;">
+                        <h2 style="background: linear-gradient(45deg, #FA2D48, #F95C87); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px;">Music</h2>
+                        <div style="width: 200px; height: 200px; margin: 0 auto 30px; background: linear-gradient(45deg, #FA2D48, #F95C87); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                            <div style="font-size: 80px;">🎵</div>
+                        </div>
+                        <h3 style="margin-bottom: 10px;">Windows Error Remix</h3>
+                        <p style="color: #a0a0a0; margin-bottom: 30px;">StarYAM Edition Soundtrack</p>
+                        <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-bottom: 30px;">
+                            <button style="background: none; border: none; color: white; font-size: 30px; cursor: pointer;">⏮</button>
+                            <button onclick="toggleMusic()" style="width: 60px; height: 60px; background: white; border: none; border-radius: 50%; color: #FA2D48; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">▶</button>
+                            <button style="background: none; border: none; color: white; font-size: 30px; cursor: pointer;">⏭</button>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); height: 4px; border-radius: 2px; margin-bottom: 10px;">
+                            <div style="background: linear-gradient(45deg, #FA2D48, #F95C87); height: 100%; width: 30%; border-radius: 2px;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; color: #a0a0a0; font-size: 12px;">
+                            <span>1:23</span>
+                            <span>4:56</span>
+                        </div>
+                    </div>
+                `
+            };
+            
+            return contents[appName] || `<p>Application ${appName} en cours de développement...</p>`;
+        }
+
+        // Fonction pour ouvrir une application
+        function openApp(appName, event) {
+            // Si l'application est déjà ouverte, la mettre au premier plan
+            if (activeWindows.has(appName)) {
+                const existingWindow = activeWindows.get(appName);
+                existingWindow.style.zIndex = ++currentZIndex;
+                existingWindow.classList.remove('minimized');
+                return;
+            }
+
+            // Créer une nouvelle fenêtre
+            const template = document.getElementById('windowTemplate');
+            const windowElement = template.content.cloneNode(true);
+            const appWindow = windowElement.querySelector('.app-window');
+            
+            // Configuration de la fenêtre
+            appWindow.dataset.app = appName;
+            appWindow.querySelector('.app-window-title').textContent = appName;
+            appWindow.querySelector('.app-window-content').innerHTML = getAppContent(appName);
+            
+            // Position initiale (centrée ou basée sur l'événement)
+            const windowWidth = 800;
+            const windowHeight = 600;
+            
+            if (event && event.target) {
+                // Position basée sur l'élément cliqué
+                const rect = event.target.getBoundingClientRect();
+                appWindow.style.width = windowWidth + 'px';
+                appWindow.style.height = windowHeight + 'px';
+                appWindow.style.left = Math.max(0, Math.min(rect.left, window.innerWidth - windowWidth)) + 'px';
+                appWindow.style.top = Math.max(28, Math.min(rect.top, window.innerHeight - windowHeight)) + 'px';
+            } else {
+                // Position centrée
+                appWindow.style.width = windowWidth + 'px';
+                appWindow.style.height = windowHeight + 'px';
+                appWindow.style.left = (window.innerWidth - windowWidth) / 2 + 'px';
+                appWindow.style.top = (window.innerHeight - windowHeight) / 2 + 'px';
+            }
+            
+            appWindow.style.zIndex = ++currentZIndex;
+            
+            // Ajouter au DOM
+            document.body.appendChild(appWindow);
+            
+            // Enregistrer la fenêtre
+            activeWindows.set(appName, appWindow);
+            
+            // Mettre à jour le dock
+            updateDockIndicators();
+            
+            // Afficher avec animation
+            setTimeout(() => {
+                appWindow.classList.add('active');
+            }, 10);
+            
+            // Initialiser le drag & drop et le redimensionnement
+            initWindowInteractions(appWindow);
+        }
+
+        // Fonction pour fermer une application
+        function closeApp(button) {
+            const appWindow = button.closest('.app-window');
+            const appName = appWindow.dataset.app;
+            
+            // Animation de fermeture
+            appWindow.style.transform = 'scale(0.8)';
+            appWindow.style.opacity = '0';
+            
+            setTimeout(() => {
+                appWindow.remove();
+                activeWindows.delete(appName);
+                updateDockIndicators();
+            }, 300);
+        }
+
+        // Fonction pour minimiser une application
+        function minimizeApp(button) {
+            const appWindow = button.closest('.app-window');
+            const appName = appWindow.dataset.app;
+            
+            // Trouver l'icône du dock correspondante
+            const dockIcon = document.querySelector(`.dock-item[data-app="${appName}"]`);
+            if (dockIcon) {
+                const dockRect = dockIcon.getBoundingClientRect();
+                const windowRect = appWindow.getBoundingClientRect();
+                
+                // Calculer la transformation
+                const scaleX = dockRect.width / windowRect.width;
+                const scaleY = dockRect.height / windowRect.height;
+                const translateX = dockRect.left - windowRect.left + (dockRect.width - windowRect.width) / 2;
+                const translateY = dockRect.top - windowRect.top + (dockRect.height - windowRect.height) / 2;
+                
+                // Appliquer l'animation
+                appWindow.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+                appWindow.style.opacity = '0';
+                
+                setTimeout(() => {
+                    appWindow.style.display = 'none';
+                    appWindow.style.transform = '';
+                    appWindow.style.opacity = '';
+                    appWindow.classList.add('minimized');
+                }, 400);
+            }
+        }
+
+        // Fonction pour maximiser une application
+        function maximizeApp(button) {
+            const appWindow = button.closest('.app-window');
+            
+            if (appWindow.classList.contains('maximized')) {
+                // Restaurer la taille normale
+                appWindow.classList.remove('maximized');
+                const storedPosition = appWindow.dataset.normalPosition;
+                if (storedPosition) {
+                    const [left, top, width, height] = storedPosition.split(',');
+                    appWindow.style.left = left;
+                    appWindow.style.top = top;
+                    appWindow.style.width = width;
+                    appWindow.style.height = height;
+                }
+            } else {
+                // Sauvegarder la position actuelle
+                appWindow.dataset.normalPosition = `${appWindow.style.left},${appWindow.style.top},${appWindow.style.width},${appWindow.style.height}`;
+                // Maximiser
+                appWindow.classList.add('maximized');
+            }
+        }
+
+        // Initialiser les interactions de fenêtre (drag & resize)
+        function initWindowInteractions(appWindow) {
+            const header = appWindow.querySelector('.app-window-header');
+            const resizeHandles = appWindow.querySelectorAll('.resize-handle');
+            
+            // Drag de la fenêtre
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('window-control')) return;
+                
+                isDragging = true;
+                currentWindow = appWindow;
+                startX = e.clientX;
+                startY = e.clientY;
+                windowStartX = appWindow.offsetLeft;
+                windowStartY = appWindow.offsetTop;
+                
+                appWindow.style.zIndex = ++currentZIndex;
+            });
+            
+            // Redimensionnement
+            resizeHandles.forEach(handle => {
+                handle.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    isResizing = true;
+                    currentWindow = appWindow;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = appWindow.offsetWidth;
+                    startHeight = appWindow.offsetHeight;
+                    windowStartX = appWindow.offsetLeft;
+                    windowStartY = appWindow.offsetTop;
+                    
+                    appWindow.dataset.resizeDir = handle.className.replace('resize-handle resize-handle-', '');
+                });
+            });
+            
+            // Focus sur clic
+            appWindow.addEventListener('mousedown', () => {
+                appWindow.style.zIndex = ++currentZIndex;
+            });
+        }
+
+        // Gestion globale du mouvement de souris
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && currentWindow) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                currentWindow.style.left = windowStartX + deltaX + 'px';
+                currentWindow.style.top = Math.max(28, windowStartY + deltaY) + 'px';
+            }
+            
+            if (isResizing && currentWindow) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                const resizeDir = currentWindow.dataset.resizeDir;
+                
+                let newWidth = startWidth;
+                let newHeight = startHeight;
+                let newLeft = windowStartX;
+                let newTop = windowStartY;
+                
+                // Redimensionnement selon la direction
+                if (resizeDir.includes('e')) newWidth = startWidth + deltaX;
+                if (resizeDir.includes('w')) {
+                    newWidth = startWidth - deltaX;
+                    newLeft = windowStartX + deltaX;
+                }
+                if (resizeDir.includes('s')) newHeight = startHeight + deltaY;
+                if (resizeDir.includes('n')) {
+                    newHeight = startHeight - deltaY;
+                    newTop = windowStartY + deltaY;
+                }
+                
+                // Appliquer les limites minimales
+                if (newWidth >= 400) {
+                    currentWindow.style.width = newWidth + 'px';
+                    currentWindow.style.left = newLeft + 'px';
+                }
+                if (newHeight >= 300) {
+                    currentWindow.style.height = newHeight + 'px';
+                    currentWindow.style.top = Math.max(28, newTop) + 'px';
+                }
+            }
+        });
+
+        // Arrêt du drag/resize
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            isResizing = false;
+            currentWindow = null;
+        });
+
+        // Mettre à jour les indicateurs du dock
+        function updateDockIndicators() {
+            const dockItems = document.querySelectorAll('.dock-item');
+            dockItems.forEach(item => {
+                const appName = item.dataset.app;
+                if (activeWindows.has(appName)) {
+                    item.classList.add('has-window');
+                } else {
+                    item.classList.remove('has-window');
+                }
+            });
+        }
+
+        // Fonction pour gérer l'entrée du terminal
+        function handleTerminalInput(event, inputElement) {
+            if (event.key === 'Enter') {
+                const outputId = inputElement.id.replace('terminalInput', 'terminalOutput');
+                const output = document.getElementById(outputId);
+                const command = inputElement.value.trim();
+                
+                // Ajouter la commande à l'output
+                output.innerHTML += `<div style="margin-top: 10px;">user@staryam-fusion ~ % ${command}</div>`;
+                
+                // Traiter la commande
+                let response = '';
+                switch(command.toLowerCase()) {
+                    case 'help':
+                        response = `Available commands:
+- help: Show this help message
+- clear: Clear terminal
+- system: Show system information
+- date: Show current date and time
+- fusion: About StarYAM Fusion
+- apps: List installed applications`;
+                        break;
+                    case 'clear':
+                        output.innerHTML = '';
+                        inputElement.value = '';
+                        return;
+                    case 'system':
+                        response = `System Information:
+OS: MacOS 16 x HyperOS 3 - StarYAM Edition
+CPU: Apple M5 Ultra Fusion
+GPU: RTX 6090 Super
+RAM: 128GB DDR5
+Storage: 8TB NVMe SSD`;
+                        break;
+                    case 'date':
+                        response = new Date().toString();
+                        break;
+                    case 'fusion':
+                        response = `StarYAM Fusion - The perfect blend of MacOS elegance and HyperOS innovation.
+Created by AdelWolf5 with ❤️`;
+                        break;
+                    case 'apps':
+                        response = `Installed Applications:
+• Safari - Web Browser
+• Mi Control - Device Management
+• Final Cut Pro - Video Editing
+• HyperOS Settings - System Configuration
+• App Store - Application Market
+• MiShare - File Sharing
+• Terminal - Command Line Interface
+• Music - Audio Player`;
+                        break;
+                    default:
+                        response = `Command not found: ${command}. Type 'help' for available commands.`;
+                }
+                
+                // Ajouter la réponse
+                output.innerHTML += `<div style="color: #a0a0a0; margin-top: 5px;">${response}</div>`;
+                output.innerHTML += `<div style="margin-top: 10px;">user@staryam-fusion ~ %</div>`;
+                
+                // Vider l'input
+                inputElement.value = '';
+                
+                // Scroll vers le bas
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        // Fonction pour envoyer à Gemini
+        async function sendToGemini() {
+            const input = document.getElementById('geminiInput');
+            const response = document.getElementById('geminiResponse');
+            const prompt = input.value.trim();
+
+            if (!prompt) {
+                response.textContent = "Veuillez entrer une question ou une commande.";
+                return;
+            }
+
+            // Afficher un message de chargement avec animation
+            response.innerHTML = '<span style="opacity: 0.6;">Traitement en cours...</span>';
+
+            // Simuler un délai de traitement
+            setTimeout(() => {
+                // Assistant IA intégré avec réponses intelligentes
+                const responses = {
+                    // Salutations
+                    'bonjour': "Bonjour ! Bienvenue sur MacOS 16 x HyperOS 3 - StarYAM Edition. Comment puis-je vous aider aujourd'hui ?",
+                    'salut': "Salut ! Ravi de vous voir sur cette interface futuriste. Que puis-je faire pour vous ?",
+                    'bonsoir': "Bonsoir ! J'espère que vous passez une excellente soirée. En quoi puis-je vous être utile ?",
+                    
+                    // Questions sur le système
+                    'système': "Vous utilisez MacOS 16 x HyperOS 3 avec un processeur Apple M5 Ultra Fusion et une RTX 6090 Super. Une configuration de rêve !",
+                    'spécifications': "Votre système : CPU Apple M5 Ultra Fusion, GPU RTX 6090 Super, Carte mère Xiaomi HyperBoard, OS MacOS 16 + HyperOS 3. Performance maximale garantie !",
+                    
+                    // Blagues
+                    'blague': "Pourquoi les développeurs préfèrent le mode sombre ? Parce que la lumière attire les bugs ! 🐛",
+                    'drôle': "Savez-vous ce qui est mieux qu'un Mac ? Un Mac avec HyperOS ! C'est comme avoir le beurre ET l'argent du beurre ! 😄",
+                    
+                    // Aide
+                    'aide': "Je peux répondre à vos questions, raconter des blagues, donner des informations sur le système, ou discuter de technologie. Essayez 'météo', 'heure', 'musique' ou posez-moi n'importe quelle question !",
+                    'commandes': "Commandes disponibles : salut, système, blague, météo, heure, musique, applications, conseil, motivation, technologie...",
+                    
+                    // Autres
+                    'météo': "Avec cette interface futuriste, même la pluie semble plus belle ! ☀️ Température optimale pour coder : 21°C",
+                    'heure': `Il est actuellement ${new Date().toLocaleTimeString('fr-FR')}. Le temps file quand on utilise une belle interface !`,
+                    'musique': "J'espère que vous appréciez le Windows Error Remix en fond ! Un classique revisité pour cette édition StarYAM 🎵",
+                    'applications': "Vous avez accès à Safari, Mi Control, Final Cut Pro, HyperOS Settings, App Store, MiShare, Terminal et Music. Que de possibilités !",
+                    'conseil': "Mon conseil du jour : Profitez de la puissance de votre M5 Ultra Fusion pour créer des choses extraordinaires !",
+                    'motivation': "Vous êtes sur la meilleure fusion OS jamais créée ! Avec MacOS 16 x HyperOS 3, rien n'est impossible ! 🚀",
+                    'technologie': "La fusion MacOS x HyperOS représente le futur : l'élégance d'Apple combinée à l'innovation de Xiaomi. Une révolution !",
+                    'adel': "Adel a créé quelque chose d'extraordinaire avec cette interface StarYAM Edition ! Un vrai visionnaire du design futuriste ! ⭐",
+                    'starYAM': "StarYAM Edition - Où la technologie rencontre l'art. Une création unique qui repousse les limites du possible !",
+                };
+
+                // Recherche intelligente dans les réponses
+                let aiResponse = null;
+                const lowerPrompt = prompt.toLowerCase();
+                
+                // Recherche exacte
+                if (responses[lowerPrompt]) {
+                    aiResponse = responses[lowerPrompt];
+                } else {
+                    // Recherche par mots-clés
+                    for (const [key, value] of Object.entries(responses)) {
+                        if (lowerPrompt.includes(key)) {
+                            aiResponse = value;
+                            break;
+                        }
+                    }
+                }
+
+                // Réponse par défaut intelligente
+                if (!aiResponse) {
+                    const defaultResponses = [
+                        `"${prompt}" - Excellente question ! Sur MacOS 16 x HyperOS 3, tout est possible. Cette interface futuriste est conçue pour repousser les limites.`,
+                        `Concernant "${prompt}", je dirais que c'est exactement le genre de réflexion innovante qui correspond à l'esprit StarYAM Edition !`,
+                        `Votre demande "${prompt}" est notée. Avec la puissance du M5 Ultra Fusion, nous pouvons accomplir des choses extraordinaires !`,
+                        `"${prompt}" - Intéressant ! Cette fusion MacOS x HyperOS ouvre tellement de possibilités. L'avenir est entre vos mains !`,
+                        `Pour "${prompt}", je vous suggère d'explorer les capacités infinies de votre système. Vous avez la meilleure configuration possible !`
+                    ];
+                    aiResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+                }
+
+                // Afficher la réponse avec effet de frappe
+                response.innerHTML = '';
+                let i = 0;
+                const typeWriter = setInterval(() => {
+                    if (i < aiResponse.length) {
+                        response.textContent += aiResponse.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typeWriter);
+                    }
+                }, 20);
+
+            }, 1000);
+
+            // Vider le champ de saisie
+            input.value = '';
+        }
+
+        // Permettre l'envoi avec la touche Entrée
+        document.getElementById('geminiInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendToGemini();
+            }
+        });
+
+        // Animation des éléments au chargement
+        window.addEventListener('load', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, index * 100);
+            });
+        });
+
+        // Gestion du raccourci Cmd+W pour fermer la fenêtre active
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'w') {
+                e.preventDefault();
+                // Fermer la fenêtre avec le z-index le plus élevé
+                let topWindow = null;
+                let highestZ = 0;
+                
+                activeWindows.forEach((window) => {
+                    const z = parseInt(window.style.zIndex || 0);
+                    if (z > highestZ) {
+                        highestZ = z;
+                        topWindow = window;
+                    }
+                });
+                
+                if (topWindow) {
+                    const closeBtn = topWindow.querySelector('.close-btn');
+                    if (closeBtn) closeBtn.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
