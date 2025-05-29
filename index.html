@@ -49,7 +49,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 15px;
-            z-index: 3000;
+            z-index: 1000;
             border-bottom: 1px solid var(--glass-border);
         }
 
@@ -184,12 +184,18 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .app-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border-color: var(--accent-blue);
+        }
+
+        .app-card:active {
+            transform: translateY(-2px);
+            transition: transform 0.1s ease;
         }
 
         .app-icon {
@@ -206,211 +212,6 @@
         .app-name {
             font-size: 12px;
             color: var(--text-secondary);
-        }
-
-        /* Fenêtre d'application améliorée */
-        .app-window {
-            position: fixed;
-            background: var(--bg-secondary);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            display: none;
-            overflow: hidden;
-            z-index: 2000;
-            resize: both;
-            min-width: 400px;
-            min-height: 300px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .app-window.active {
-            display: block;
-            animation: windowOpen 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .app-window.minimizing {
-            animation: windowMinimize 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .app-window.maximized {
-            top: 28px !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: calc(100vh - 28px) !important;
-            border-radius: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes windowOpen {
-            from {
-                transform: scale(0.8) translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes windowMinimize {
-            to {
-                transform: scale(0.2) translateY(100vh);
-                opacity: 0;
-            }
-        }
-
-        .app-window-header {
-            background: rgba(40, 40, 40, 0.95);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--glass-border);
-            cursor: move;
-            user-select: none;
-        }
-
-        .app-window-title {
-            font-size: 14px;
-            font-weight: 500;
-            pointer-events: none;
-        }
-
-        .app-window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .window-control {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .window-control:hover {
-            transform: scale(1.1);
-        }
-
-        .close-btn {
-            background: #FF5F57;
-        }
-
-        .close-btn:hover {
-            background: #FF3B30;
-        }
-
-        .minimize-btn {
-            background: #FFBD2E;
-        }
-
-        .minimize-btn:hover {
-            background: #FFA500;
-        }
-
-        .maximize-btn {
-            background: #28CA42;
-        }
-
-        .maximize-btn:hover {
-            background: #00C850;
-        }
-
-        .app-window-content {
-            padding: 30px;
-            height: calc(100% - 53px);
-            overflow-y: auto;
-        }
-
-        /* Poignées de redimensionnement */
-        .resize-handle {
-            position: absolute;
-            background: transparent;
-        }
-
-        .resize-handle-n {
-            top: 0;
-            left: 10px;
-            right: 10px;
-            height: 5px;
-            cursor: ns-resize;
-        }
-
-        .resize-handle-e {
-            top: 10px;
-            right: 0;
-            bottom: 10px;
-            width: 5px;
-            cursor: ew-resize;
-        }
-
-        .resize-handle-s {
-            bottom: 0;
-            left: 10px;
-            right: 10px;
-            height: 5px;
-            cursor: ns-resize;
-        }
-
-        .resize-handle-w {
-            top: 10px;
-            left: 0;
-            bottom: 10px;
-            width: 5px;
-            cursor: ew-resize;
-        }
-
-        .resize-handle-ne {
-            top: 0;
-            right: 0;
-            width: 10px;
-            height: 10px;
-            cursor: nesw-resize;
-        }
-
-        .resize-handle-se {
-            bottom: 0;
-            right: 0;
-            width: 10px;
-            height: 10px;
-            cursor: nwse-resize;
-        }
-
-        .resize-handle-sw {
-            bottom: 0;
-            left: 0;
-            width: 10px;
-            height: 10px;
-            cursor: nesw-resize;
-        }
-
-        .resize-handle-nw {
-            top: 0;
-            left: 0;
-            width: 10px;
-            height: 10px;
-            cursor: nwse-resize;
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: none;
-            z-index: 1500;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            display: block;
         }
 
         /* Section Gemini AI */
@@ -497,7 +298,6 @@
             display: flex;
             gap: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            z-index: 2500;
         }
 
         .dock-item {
@@ -510,58 +310,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 24px;
-            position: relative;
         }
 
         .dock-item:hover {
             transform: translateY(-10px) scale(1.2);
         }
 
-        .dock-item.has-window::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-        }
-
-        /* Contrôles audio */
-        .audio-controls {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 0.3;
-            transition: opacity 0.3s ease;
-        }
-
-        .audio-controls:hover {
-            opacity: 1;
-        }
-
-        .audio-controls button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 5px;
-            transition: all 0.2s ease;
-        }
-
-        .audio-controls button:hover {
-            transform: scale(1.2);
+        .dock-item:active {
+            transform: translateY(-8px) scale(1.15);
+            transition: transform 0.1s ease;
         }
 
         /* Animations */
@@ -580,6 +337,31 @@
             animation: fadeIn 0.6s ease-out;
         }
 
+        /* Animation pulse pour l'icône audio */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #audioControl {
+            transition: all 0.3s ease;
+        }
+
+        #audioControl:hover {
+            transform: scale(1.2);
+            color: var(--accent-blue);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .apps-grid {
@@ -595,25 +377,117 @@
                 width: 40px;
                 height: 40px;
             }
-            
-            .app-window {
-                min-width: 300px;
-                min-height: 200px;
+        }
+
+        /* Fenêtre modale pour les applications */
+        .app-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            height: 70%;
+            max-height: 600px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: none;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2000;
+        }
+
+        .app-window.active {
+            display: block;
+            animation: windowOpen 0.3s ease-out;
+        }
+
+        @keyframes windowOpen {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
             }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .window-header {
+            background: rgba(40, 40, 40, 0.9);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .window-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .window-close {
+            background: #FF5F57;
+        }
+
+        .window-minimize {
+            background: #FFBD2E;
+        }
+
+        .window-maximize {
+            background: #27C93F;
+        }
+
+        .window-control:hover {
+            filter: brightness(1.2);
+        }
+
+        .window-content {
+            padding: 30px;
+            height: calc(100% - 45px);
+            overflow-y: auto;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1999;
+        }
+
+        .overlay.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Musique de fond avec contrôles -->
-    <audio id="backgroundMusic" loop>
+    <!-- Musique de fond avec plusieurs formats pour compatibilité -->
+    <audio id="backgroundMusic" loop preload="auto">
         <source src="https://raw.githubusercontent.com/AdelWolf5/super-marques-fusion/refs/heads/main/Windows%20Error%20Remix.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/AdelWolf5/super-marques-fusion/refs/heads/main/Windows%20Error%20Remix.mp3" type="audio/mp3">
+        Votre navigateur ne supporte pas l'élément audio.
     </audio>
-
-    <!-- Contrôles audio -->
-    <div class="audio-controls">
-        <button onclick="toggleMusic()" id="playPauseBtn">▶️</button>
-        <span style="font-size: 12px;">Musique</span>
-    </div>
 
     <!-- Barre de menu -->
     <div class="menu-bar">
@@ -626,6 +500,7 @@
             <span class="menu-item">HyperOS</span>
         </div>
         <div class="menu-right">
+            <span id="audioControl" style="cursor: pointer;" title="Cliquez pour activer la musique">🔇</span>
             <span>🔋 100%</span>
             <span id="clock">--:--</span>
         </div>
@@ -663,35 +538,35 @@
         <div class="apps-section fade-in">
             <h2 class="apps-title">Applications</h2>
             <div class="apps-grid">
-                <div class="app-card" onclick="openApp('Safari', event)">
+                <div class="app-card" data-app="safari">
                     <div class="app-icon" style="background: linear-gradient(45deg, #007AFF, #5AC8FA);">🌐</div>
                     <div class="app-name">Safari</div>
                 </div>
-                <div class="app-card" onclick="openApp('Mi Control', event)">
+                <div class="app-card" data-app="mi-control">
                     <div class="app-icon" style="background: linear-gradient(45deg, #FF6900, #FFB800);">📱</div>
                     <div class="app-name">Mi Control</div>
                 </div>
-                <div class="app-card" onclick="openApp('Final Cut Pro', event)">
+                <div class="app-card" data-app="final-cut">
                     <div class="app-icon" style="background: linear-gradient(45deg, #B620E0, #F7B500);">🎬</div>
                     <div class="app-name">Final Cut Pro</div>
                 </div>
-                <div class="app-card" onclick="openApp('HyperOS Settings', event)">
+                <div class="app-card" data-app="hyperos-settings">
                     <div class="app-icon" style="background: linear-gradient(45deg, #FF3B30, #FF9500);">⚙️</div>
                     <div class="app-name">HyperOS Settings</div>
                 </div>
-                <div class="app-card" onclick="openApp('App Store', event)">
+                <div class="app-card" data-app="app-store">
                     <div class="app-icon" style="background: linear-gradient(45deg, #007AFF, #34C759);">📦</div>
                     <div class="app-name">App Store</div>
                 </div>
-                <div class="app-card" onclick="openApp('MiShare', event)">
+                <div class="app-card" data-app="mishare">
                     <div class="app-icon" style="background: linear-gradient(45deg, #FF6900, #007AFF);">📤</div>
                     <div class="app-name">MiShare</div>
                 </div>
-                <div class="app-card" onclick="openApp('Terminal', event)">
+                <div class="app-card" data-app="terminal">
                     <div class="app-icon" style="background: linear-gradient(45deg, #000000, #333333);">💻</div>
                     <div class="app-name">Terminal</div>
                 </div>
-                <div class="app-card" onclick="openApp('Music', event)">
+                <div class="app-card" data-app="music">
                     <div class="app-icon" style="background: linear-gradient(45deg, #FA2D48, #F95C87);">🎵</div>
                     <div class="app-name">Music</div>
                 </div>
@@ -709,72 +584,34 @@
         </div>
     </div>
 
-    <!-- Overlay -->
+    <!-- Overlay pour les fenêtres -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Template de fenêtre d'application -->
-    <template id="windowTemplate">
-        <div class="app-window" data-app="">
-            <div class="resize-handle resize-handle-n"></div>
-            <div class="resize-handle resize-handle-e"></div>
-            <div class="resize-handle resize-handle-s"></div>
-            <div class="resize-handle resize-handle-w"></div>
-            <div class="resize-handle resize-handle-ne"></div>
-            <div class="resize-handle resize-handle-se"></div>
-            <div class="resize-handle resize-handle-sw"></div>
-            <div class="resize-handle resize-handle-nw"></div>
-            
-            <div class="app-window-header">
-                <div class="app-window-title">Application</div>
-                <div class="app-window-controls">
-                    <div class="window-control close-btn" onclick="closeApp(this)"></div>
-                    <div class="window-control minimize-btn" onclick="minimizeApp(this)"></div>
-                    <div class="window-control maximize-btn" onclick="maximizeApp(this)"></div>
-                </div>
-            </div>
-            <div class="app-window-content">
-                <!-- Le contenu de l'application sera injecté ici -->
+    <!-- Fenêtre d'application -->
+    <div class="app-window" id="appWindow">
+        <div class="window-header">
+            <div class="window-title" id="windowTitle">Application</div>
+            <div class="window-controls">
+                <div class="window-control window-close" onclick="closeApp()"></div>
+                <div class="window-control window-minimize"></div>
+                <div class="window-control window-maximize"></div>
             </div>
         </div>
-    </template>
+        <div class="window-content" id="windowContent">
+            <!-- Le contenu de l'application sera injecté ici -->
+        </div>
+    </div>
 
     <!-- Dock -->
-    <div class="dock" id="dock">
-        <div class="dock-item" style="background: linear-gradient(45deg, #007AFF, #5AC8FA);" onclick="openApp('Safari', event)" data-app="Safari">🌐</div>
-        <div class="dock-item" style="background: linear-gradient(45deg, #FF6900, #FFB800);" onclick="openApp('Mi Control', event)" data-app="Mi Control">📱</div>
-        <div class="dock-item" style="background: linear-gradient(45deg, #B620E0, #F7B500);" onclick="openApp('Final Cut Pro', event)" data-app="Final Cut Pro">🎬</div>
-        <div class="dock-item" style="background: linear-gradient(45deg, #000000, #333333);" onclick="openApp('Terminal', event)" data-app="Terminal">💻</div>
-        <div class="dock-item" style="background: linear-gradient(45deg, #FA2D48, #F95C87);" onclick="openApp('Music', event)" data-app="Music">🎵</div>
+    <div class="dock">
+        <div class="dock-item" style="background: linear-gradient(45deg, #007AFF, #5AC8FA);" onclick="openApp('safari')">🌐</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #FF6900, #FFB800);" onclick="openApp('mi-control')">📱</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #B620E0, #F7B500);" onclick="openApp('final-cut')">🎬</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #000000, #333333);" onclick="openApp('terminal')">💻</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #FA2D48, #F95C87);" onclick="openApp('music')">🎵</div>
     </div>
 
     <script>
-        // Variables globales
-        let activeWindows = new Map();
-        let currentZIndex = 2000;
-        let isDragging = false;
-        let isResizing = false;
-        let currentWindow = null;
-        let startX = 0;
-        let startY = 0;
-        let startWidth = 0;
-        let startHeight = 0;
-        let windowStartX = 0;
-        let windowStartY = 0;
-
-        // Gestion de la musique
-        function toggleMusic() {
-            const music = document.getElementById('backgroundMusic');
-            const btn = document.getElementById('playPauseBtn');
-            
-            if (music.paused) {
-                music.play();
-                btn.textContent = '⏸️';
-            } else {
-                music.pause();
-                btn.textContent = '▶️';
-            }
-        }
-
         // Horloge en temps réel
         function updateClock() {
             const now = new Date();
@@ -785,533 +622,92 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Fonction pour obtenir le contenu de l'application
-        function getAppContent(appName) {
-            const contents = {
-                'Safari': `
-                    <div style="text-align: center; padding: 50px;">
-                        <h2 style="color: #007AFF; margin-bottom: 20px;">Safari - Navigateur Web</h2>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
-                            <input type="text" placeholder="Rechercher ou saisir une adresse web" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white;">
-                        </div>
-                        <p>Navigation rapide et sécurisée avec Safari sur MacOS 16 x HyperOS 3</p>
-                        <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">🔒</div>
-                                <div>Navigation privée</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">⚡</div>
-                                <div>Ultra rapide</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">🛡️</div>
-                                <div>Protection avancée</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                'Mi Control': `
-                    <div style="text-align: center; padding: 50px;">
-                        <h2 style="color: #FF6900; margin-bottom: 20px;">Mi Control Center</h2>
-                        <p>Contrôlez tous vos appareils Xiaomi depuis une interface unifiée</p>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px;">
-                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
-                                <div style="font-size: 40px; margin-bottom: 10px;">📱</div>
-                                <h3>Téléphone</h3>
-                                <p style="color: #a0a0a0; font-size: 14px;">Mi 14 Ultra connecté</p>
-                            </div>
-                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
-                                <div style="font-size: 40px; margin-bottom: 10px;">⌚</div>
-                                <h3>Montre</h3>
-                                <p style="color: #a0a0a0; font-size: 14px;">Mi Watch S3 active</p>
-                            </div>
-                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
-                                <div style="font-size: 40px; margin-bottom: 10px;">🏠</div>
-                                <h3>Maison</h3>
-                                <p style="color: #a0a0a0; font-size: 14px;">12 appareils connectés</p>
-                            </div>
-                            <div style="background: rgba(255,105,0,0.1); border: 1px solid rgba(255,105,0,0.3); padding: 30px; border-radius: 15px;">
-                                <div style="font-size: 40px; margin-bottom: 10px;">🎧</div>
-                                <h3>Audio</h3>
-                                <p style="color: #a0a0a0; font-size: 14px;">Buds Pro 2 connectés</p>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                'Final Cut Pro': `
-                    <div style="padding: 30px;">
-                        <h2 style="background: linear-gradient(45deg, #B620E0, #F7B500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;">Final Cut Pro X</h2>
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; height: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 60px; margin-bottom: 20px;">🎬</div>
-                                <p>Espace de montage vidéo professionnel</p>
-                                <p style="color: #a0a0a0; font-size: 14px;">Glissez vos médias ici pour commencer</p>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 20px;">
-                            <button style="flex: 1; padding: 15px; background: linear-gradient(45deg, #B620E0, #F7B500); border: none; border-radius: 10px; color: white; cursor: pointer;">Nouveau Projet</button>
-                            <button style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; cursor: pointer;">Ouvrir Projet</button>
-                            <button style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; cursor: pointer;">Importer Média</button>
-                        </div>
-                    </div>
-                `,
-                'HyperOS Settings': `
-                    <div style="padding: 30px;">
-                        <h2 style="color: #FF6900; margin-bottom: 30px;">Paramètres HyperOS</h2>
-                        <div style="display: grid; gap: 15px;">
-                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <span style="font-size: 24px;">🔧</span>
-                                        <div>
-                                            <div style="font-weight: 500;">Général</div>
-                                            <div style="color: #a0a0a0; font-size: 12px;">Langue, région, accessibilité</div>
-                                        </div>
-                                    </div>
-                                    <span style="color: #a0a0a0;">›</span>
-                                </div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <span style="font-size: 24px;">🎨</span>
-                                        <div>
-                                            <div style="font-weight: 500;">Apparence</div>
-                                            <div style="color: #a0a0a0; font-size: 12px;">Thème, couleurs, animations</div>
-                                        </div>
-                                    </div>
-                                    <span style="color: #a0a0a0;">›</span>
-                                </div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <span style="font-size: 24px;">🔒</span>
-                                        <div>
-                                            <div style="font-weight: 500;">Sécurité & Confidentialité</div>
-                                            <div style="color: #a0a0a0; font-size: 12px;">Face ID, mots de passe, permissions</div>
-                                        </div>
-                                    </div>
-                                    <span style="color: #a0a0a0;">›</span>
-                                </div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <span style="font-size: 24px;">⚡</span>
-                                        <div>
-                                            <div style="font-weight: 500;">Performance</div>
-                                            <div style="color: #a0a0a0; font-size: 12px;">Mode turbo, économie d'énergie</div>
-                                        </div>
-                                    </div>
-                                    <span style="color: #a0a0a0;">›</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                'App Store': `
-                    <div style="padding: 30px;">
-                        <h2 style="color: #007AFF; margin-bottom: 30px;">App Store</h2>
-                        <div style="background: linear-gradient(135deg, #007AFF, #34C759); border-radius: 15px; padding: 30px; margin-bottom: 30px; text-align: center;">
-                            <h3 style="font-size: 28px; margin-bottom: 10px;">Découvrez StarYAM Apps</h3>
-                            <p>Des applications exclusives pour MacOS 16 x HyperOS 3</p>
-                        </div>
-                        <h3 style="margin-bottom: 20px;">Applications populaires</h3>
-                        <div style="display: grid; gap: 15px;">
-                            <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #FF6900, #FFB800); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">🚀</div>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 500;">HyperBoost Pro</div>
-                                    <div style="color: #a0a0a0; font-size: 12px;">Optimisez vos performances</div>
-                                </div>
-                                <button style="padding: 8px 20px; background: #007AFF; border: none; border-radius: 20px; color: white; cursor: pointer;">Obtenir</button>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #B620E0, #F7B500); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">✨</div>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 500;">StarYAM Studio</div>
-                                    <div style="color: #a0a0a0; font-size: 12px;">Création et design avancé</div>
-                                </div>
-                                <button style="padding: 8px 20px; background: #007AFF; border: none; border-radius: 20px; color: white; cursor: pointer;">Obtenir</button>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                'MiShare': `
-                    <div style="text-align: center; padding: 50px;">
-                        <h2 style="color: #FF6900; margin-bottom: 30px;">MiShare</h2>
-                        <div style="width: 200px; height: 200px; margin: 0 auto 30px; border: 3px dashed rgba(255,105,0,0.5); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
-                            <div>
-                                <div style="font-size: 60px; margin-bottom: 10px;">📤</div>
-                                <p>Glissez vos fichiers ici</p>
-                            </div>
-                        </div>
-                        <p style="margin-bottom: 30px;">Partagez instantanément avec vos appareils Xiaomi</p>
-                        <div style="display: flex; gap: 20px; justify-content: center;">
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">📱</div>
-                                <div>Mi 14 Ultra</div>
-                                <div style="color: #34C759; font-size: 12px;">● Connecté</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">💻</div>
-                                <div>Mi Book Pro</div>
-                                <div style="color: #a0a0a0; font-size: 12px;">● Hors ligne</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
-                                <div style="font-size: 30px; margin-bottom: 10px;">📱</div>
-                                <div>Mi Pad 6</div>
-                                <div style="color: #34C759; font-size: 12px;">● Connecté</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                'Terminal': `
-                    <div style="padding: 20px; font-family: 'SF Mono', Consolas, monospace; font-size: 14px; height: 100%;">
-                        <div style="color: #34C759; margin-bottom: 10px;">StarYAM Terminal v3.0 - MacOS 16 x HyperOS 3</div>
-                        <div style="color: #a0a0a0; margin-bottom: 20px;">Type 'help' for available commands</div>
-                        <div id="terminalOutput_${Date.now()}" style="margin-bottom: 20px; max-height: 300px; overflow-y: auto;">
-                            <div>Last login: ${new Date().toString()}</div>
-                            <div style="margin-top: 10px;">user@staryam-fusion ~ %</div>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <span style="color: #34C759;">user@staryam-fusion ~ % </span>
-                            <input type="text" id="terminalInput_${Date.now()}" style="flex: 1; background: transparent; border: none; color: white; outline: none; margin-left: 10px;" onkeypress="handleTerminalInput(event, this)">
-                        </div>
-                    </div>
-                `,
-                'Music': `
-                    <div style="text-align: center; padding: 50px;">
-                        <h2 style="background: linear-gradient(45deg, #FA2D48, #F95C87); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px;">Music</h2>
-                        <div style="width: 200px; height: 200px; margin: 0 auto 30px; background: linear-gradient(45deg, #FA2D48, #F95C87); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
-                            <div style="font-size: 80px;">🎵</div>
-                        </div>
-                        <h3 style="margin-bottom: 10px;">Windows Error Remix</h3>
-                        <p style="color: #a0a0a0; margin-bottom: 30px;">StarYAM Edition Soundtrack</p>
-                        <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-bottom: 30px;">
-                            <button style="background: none; border: none; color: white; font-size: 30px; cursor: pointer;">⏮</button>
-                            <button onclick="toggleMusic()" style="width: 60px; height: 60px; background: white; border: none; border-radius: 50%; color: #FA2D48; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">▶</button>
-                            <button style="background: none; border: none; color: white; font-size: 30px; cursor: pointer;">⏭</button>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.1); height: 4px; border-radius: 2px; margin-bottom: 10px;">
-                            <div style="background: linear-gradient(45deg, #FA2D48, #F95C87); height: 100%; width: 30%; border-radius: 2px;"></div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; color: #a0a0a0; font-size: 12px;">
-                            <span>1:23</span>
-                            <span>4:56</span>
-                        </div>
-                    </div>
-                `
-            };
-            
-            return contents[appName] || `<p>Application ${appName} en cours de développement...</p>`;
-        }
-
-        // Fonction pour ouvrir une application
-        function openApp(appName, event) {
-            // Si l'application est déjà ouverte, la mettre au premier plan
-            if (activeWindows.has(appName)) {
-                const existingWindow = activeWindows.get(appName);
-                existingWindow.style.zIndex = ++currentZIndex;
-                existingWindow.classList.remove('minimized');
-                return;
-            }
-
-            // Créer une nouvelle fenêtre
-            const template = document.getElementById('windowTemplate');
-            const windowElement = template.content.cloneNode(true);
-            const appWindow = windowElement.querySelector('.app-window');
-            
-            // Configuration de la fenêtre
-            appWindow.dataset.app = appName;
-            appWindow.querySelector('.app-window-title').textContent = appName;
-            appWindow.querySelector('.app-window-content').innerHTML = getAppContent(appName);
-            
-            // Position initiale (centrée ou basée sur l'événement)
-            const windowWidth = 800;
-            const windowHeight = 600;
-            
-            if (event && event.target) {
-                // Position basée sur l'élément cliqué
-                const rect = event.target.getBoundingClientRect();
-                appWindow.style.width = windowWidth + 'px';
-                appWindow.style.height = windowHeight + 'px';
-                appWindow.style.left = Math.max(0, Math.min(rect.left, window.innerWidth - windowWidth)) + 'px';
-                appWindow.style.top = Math.max(28, Math.min(rect.top, window.innerHeight - windowHeight)) + 'px';
+        // Gestion de l'audio
+        let audioPlaying = false;
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const audioControl = document.getElementById('audioControl');
+        
+        // Fonction pour basculer l'audio
+        function toggleAudio() {
+            if (audioPlaying) {
+                backgroundMusic.pause();
+                audioControl.textContent = '🔇';
+                audioControl.title = 'Cliquez pour activer la musique';
+                audioPlaying = false;
             } else {
-                // Position centrée
-                appWindow.style.width = windowWidth + 'px';
-                appWindow.style.height = windowHeight + 'px';
-                appWindow.style.left = (window.innerWidth - windowWidth) / 2 + 'px';
-                appWindow.style.top = (window.innerHeight - windowHeight) / 2 + 'px';
+                backgroundMusic.play().then(() => {
+                    audioControl.textContent = '🔊';
+                    audioControl.title = 'Cliquez pour couper la musique';
+                    audioPlaying = true;
+                }).catch(error => {
+                    console.error('Erreur de lecture audio:', error);
+                    // Afficher un message d'erreur temporaire
+                    audioControl.textContent = '⚠️';
+                    audioControl.title = 'Erreur de lecture - Vérifiez votre connexion';
+                    setTimeout(() => {
+                        audioControl.textContent = '🔇';
+                    }, 2000);
+                });
             }
-            
-            appWindow.style.zIndex = ++currentZIndex;
-            
-            // Ajouter au DOM
-            document.body.appendChild(appWindow);
-            
-            // Enregistrer la fenêtre
-            activeWindows.set(appName, appWindow);
-            
-            // Mettre à jour le dock
-            updateDockIndicators();
-            
-            // Afficher avec animation
-            setTimeout(() => {
-                appWindow.classList.add('active');
-            }, 10);
-            
-            // Initialiser le drag & drop et le redimensionnement
-            initWindowInteractions(appWindow);
         }
-
-        // Fonction pour fermer une application
-        function closeApp(button) {
-            const appWindow = button.closest('.app-window');
-            const appName = appWindow.dataset.app;
-            
-            // Animation de fermeture
-            appWindow.style.transform = 'scale(0.8)';
-            appWindow.style.opacity = '0';
-            
-            setTimeout(() => {
-                appWindow.remove();
-                activeWindows.delete(appName);
-                updateDockIndicators();
-            }, 300);
-        }
-
-        // Fonction pour minimiser une application
-        function minimizeApp(button) {
-            const appWindow = button.closest('.app-window');
-            const appName = appWindow.dataset.app;
-            
-            // Trouver l'icône du dock correspondante
-            const dockIcon = document.querySelector(`.dock-item[data-app="${appName}"]`);
-            if (dockIcon) {
-                const dockRect = dockIcon.getBoundingClientRect();
-                const windowRect = appWindow.getBoundingClientRect();
+        
+        // Écouteur d'événement pour le contrôle audio
+        audioControl.addEventListener('click', toggleAudio);
+        
+        // Essayer de jouer automatiquement au premier clic sur la page
+        let firstInteraction = true;
+        document.addEventListener('click', function() {
+            if (firstInteraction && !audioPlaying) {
+                firstInteraction = false;
+                // Afficher une notification visuelle
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 50px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(0, 122, 255, 0.9);
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    z-index: 3000;
+                    animation: fadeInOut 3s ease-out;
+                `;
+                notification.textContent = '🎵 Cliquez sur l\'icône audio pour activer la musique';
+                document.body.appendChild(notification);
                 
-                // Calculer la transformation
-                const scaleX = dockRect.width / windowRect.width;
-                const scaleY = dockRect.height / windowRect.height;
-                const translateX = dockRect.left - windowRect.left + (dockRect.width - windowRect.width) / 2;
-                const translateY = dockRect.top - windowRect.top + (dockRect.height - windowRect.height) / 2;
+                // Ajouter l'animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fadeInOut {
+                        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+                        20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                        80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+                    }
+                `;
+                document.head.appendChild(style);
                 
-                // Appliquer l'animation
-                appWindow.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-                appWindow.style.opacity = '0';
+                // Faire pulser l'icône audio au début
+                audioControl.style.animation = 'pulse 2s infinite';
                 
                 setTimeout(() => {
-                    appWindow.style.display = 'none';
-                    appWindow.style.transform = '';
-                    appWindow.style.opacity = '';
-                    appWindow.classList.add('minimized');
-                }, 400);
-            }
-        }
-
-        // Fonction pour maximiser une application
-        function maximizeApp(button) {
-            const appWindow = button.closest('.app-window');
-            
-            if (appWindow.classList.contains('maximized')) {
-                // Restaurer la taille normale
-                appWindow.classList.remove('maximized');
-                const storedPosition = appWindow.dataset.normalPosition;
-                if (storedPosition) {
-                    const [left, top, width, height] = storedPosition.split(',');
-                    appWindow.style.left = left;
-                    appWindow.style.top = top;
-                    appWindow.style.width = width;
-                    appWindow.style.height = height;
-                }
-            } else {
-                // Sauvegarder la position actuelle
-                appWindow.dataset.normalPosition = `${appWindow.style.left},${appWindow.style.top},${appWindow.style.width},${appWindow.style.height}`;
-                // Maximiser
-                appWindow.classList.add('maximized');
-            }
-        }
-
-        // Initialiser les interactions de fenêtre (drag & resize)
-        function initWindowInteractions(appWindow) {
-            const header = appWindow.querySelector('.app-window-header');
-            const resizeHandles = appWindow.querySelectorAll('.resize-handle');
-            
-            // Drag de la fenêtre
-            header.addEventListener('mousedown', (e) => {
-                if (e.target.classList.contains('window-control')) return;
-                
-                isDragging = true;
-                currentWindow = appWindow;
-                startX = e.clientX;
-                startY = e.clientY;
-                windowStartX = appWindow.offsetLeft;
-                windowStartY = appWindow.offsetTop;
-                
-                appWindow.style.zIndex = ++currentZIndex;
-            });
-            
-            // Redimensionnement
-            resizeHandles.forEach(handle => {
-                handle.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    isResizing = true;
-                    currentWindow = appWindow;
-                    startX = e.clientX;
-                    startY = e.clientY;
-                    startWidth = appWindow.offsetWidth;
-                    startHeight = appWindow.offsetHeight;
-                    windowStartX = appWindow.offsetLeft;
-                    windowStartY = appWindow.offsetTop;
-                    
-                    appWindow.dataset.resizeDir = handle.className.replace('resize-handle resize-handle-', '');
-                });
-            });
-            
-            // Focus sur clic
-            appWindow.addEventListener('mousedown', () => {
-                appWindow.style.zIndex = ++currentZIndex;
-            });
-        }
-
-        // Gestion globale du mouvement de souris
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging && currentWindow) {
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                
-                currentWindow.style.left = windowStartX + deltaX + 'px';
-                currentWindow.style.top = Math.max(28, windowStartY + deltaY) + 'px';
-            }
-            
-            if (isResizing && currentWindow) {
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                const resizeDir = currentWindow.dataset.resizeDir;
-                
-                let newWidth = startWidth;
-                let newHeight = startHeight;
-                let newLeft = windowStartX;
-                let newTop = windowStartY;
-                
-                // Redimensionnement selon la direction
-                if (resizeDir.includes('e')) newWidth = startWidth + deltaX;
-                if (resizeDir.includes('w')) {
-                    newWidth = startWidth - deltaX;
-                    newLeft = windowStartX + deltaX;
-                }
-                if (resizeDir.includes('s')) newHeight = startHeight + deltaY;
-                if (resizeDir.includes('n')) {
-                    newHeight = startHeight - deltaY;
-                    newTop = windowStartY + deltaY;
-                }
-                
-                // Appliquer les limites minimales
-                if (newWidth >= 400) {
-                    currentWindow.style.width = newWidth + 'px';
-                    currentWindow.style.left = newLeft + 'px';
-                }
-                if (newHeight >= 300) {
-                    currentWindow.style.height = newHeight + 'px';
-                    currentWindow.style.top = Math.max(28, newTop) + 'px';
-                }
+                    notification.remove();
+                    // Arrêter l'animation pulse après la notification
+                    audioControl.style.animation = '';
+                }, 3000);
             }
         });
 
-        // Arrêt du drag/resize
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            isResizing = false;
-            currentWindow = null;
-        });
-
-        // Mettre à jour les indicateurs du dock
-        function updateDockIndicators() {
-            const dockItems = document.querySelectorAll('.dock-item');
-            dockItems.forEach(item => {
-                const appName = item.dataset.app;
-                if (activeWindows.has(appName)) {
-                    item.classList.add('has-window');
-                } else {
-                    item.classList.remove('has-window');
-                }
-            });
-        }
-
-        // Fonction pour gérer l'entrée du terminal
-        function handleTerminalInput(event, inputElement) {
-            if (event.key === 'Enter') {
-                const outputId = inputElement.id.replace('terminalInput', 'terminalOutput');
-                const output = document.getElementById(outputId);
-                const command = inputElement.value.trim();
-                
-                // Ajouter la commande à l'output
-                output.innerHTML += `<div style="margin-top: 10px;">user@staryam-fusion ~ % ${command}</div>`;
-                
-                // Traiter la commande
-                let response = '';
-                switch(command.toLowerCase()) {
-                    case 'help':
-                        response = `Available commands:
-- help: Show this help message
-- clear: Clear terminal
-- system: Show system information
-- date: Show current date and time
-- fusion: About StarYAM Fusion
-- apps: List installed applications`;
-                        break;
-                    case 'clear':
-                        output.innerHTML = '';
-                        inputElement.value = '';
-                        return;
-                    case 'system':
-                        response = `System Information:
-OS: MacOS 16 x HyperOS 3 - StarYAM Edition
-CPU: Apple M5 Ultra Fusion
-GPU: RTX 6090 Super
-RAM: 128GB DDR5
-Storage: 8TB NVMe SSD`;
-                        break;
-                    case 'date':
-                        response = new Date().toString();
-                        break;
-                    case 'fusion':
-                        response = `StarYAM Fusion - The perfect blend of MacOS elegance and HyperOS innovation.
-Created by AdelWolf5 with ❤️`;
-                        break;
-                    case 'apps':
-                        response = `Installed Applications:
-• Safari - Web Browser
-• Mi Control - Device Management
-• Final Cut Pro - Video Editing
-• HyperOS Settings - System Configuration
-• App Store - Application Market
-• MiShare - File Sharing
-• Terminal - Command Line Interface
-• Music - Audio Player`;
-                        break;
-                    default:
-                        response = `Command not found: ${command}. Type 'help' for available commands.`;
-                }
-                
-                // Ajouter la réponse
-                output.innerHTML += `<div style="color: #a0a0a0; margin-top: 5px;">${response}</div>`;
-                output.innerHTML += `<div style="margin-top: 10px;">user@staryam-fusion ~ %</div>`;
-                
-                // Vider l'input
-                inputElement.value = '';
-                
-                // Scroll vers le bas
-                output.scrollTop = output.scrollHeight;
+        // Rendre toggleAudio global pour l'app Music
+        window.toggleAudioFromApp = toggleAudio;
+        
+        // Contrôle du volume
+        document.addEventListener('input', function(e) {
+            if (e.target.id === 'volumeControl') {
+                backgroundMusic.volume = e.target.value / 100;
             }
-        }
-
-        // Fonction pour envoyer à Gemini
+        });
         async function sendToGemini() {
             const input = document.getElementById('geminiInput');
             const response = document.getElementById('geminiResponse');
@@ -1422,27 +818,229 @@ Created by AdelWolf5 with ❤️`;
             });
         });
 
-        // Gestion du raccourci Cmd+W pour fermer la fenêtre active
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'w') {
-                e.preventDefault();
-                // Fermer la fenêtre avec le z-index le plus élevé
-                let topWindow = null;
-                let highestZ = 0;
-                
-                activeWindows.forEach((window) => {
-                    const z = parseInt(window.style.zIndex || 0);
-                    if (z > highestZ) {
-                        highestZ = z;
-                        topWindow = window;
-                    }
-                });
-                
-                if (topWindow) {
-                    const closeBtn = topWindow.querySelector('.close-btn');
-                    if (closeBtn) closeBtn.click();
-                }
+        // Contenu des applications
+        const appContents = {
+            'safari': {
+                title: 'Safari',
+                content: `
+                    <h2>Safari - Navigateur Web Ultra Rapide</h2>
+                    <p>Bienvenue dans Safari optimisé pour MacOS 16 x HyperOS 3 !</p>
+                    <div style="margin: 20px 0;">
+                        <input type="text" placeholder="Rechercher ou saisir une URL..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;">
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3>Favoris</h3>
+                        <p>• Apple.com<br>• Xiaomi HyperOS<br>• StarYAM Technologies<br>• GitHub</p>
+                    </div>
+                    <p style="margin-top: 20px;">Vitesse de navigation : <strong>5000 Mbps</strong> grâce au M5 Ultra Fusion</p>
+                `
+            },
+            'mi-control': {
+                title: 'Mi Control',
+                content: `
+                    <h2>Mi Control - Centre de Contrôle HyperOS</h2>
+                    <p>Gérez tous vos appareils Xiaomi depuis une interface unifiée.</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                        <div style="background: rgba(255,105,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3>🏠 Maison</h3>
+                            <p>12 appareils connectés</p>
+                        </div>
+                        <div style="background: rgba(255,105,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3>📱 Mobile</h3>
+                            <p>Mi 14 Ultra connecté</p>
+                        </div>
+                        <div style="background: rgba(255,105,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3>⌚ Wearables</h3>
+                            <p>Mi Band 9 synchronisé</p>
+                        </div>
+                        <div style="background: rgba(255,105,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3>🎧 Audio</h3>
+                            <p>Buds 5 Pro actifs</p>
+                        </div>
+                    </div>
+                `
+            },
+            'final-cut': {
+                title: 'Final Cut Pro',
+                content: `
+                    <h2>Final Cut Pro X - Édition Vidéo Professionnelle</h2>
+                    <p>Montage vidéo accéléré par l'IA avec support 8K HDR</p>
+                    <div style="background: rgba(182,32,224,0.2); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                        <h3>Projet en cours</h3>
+                        <p>📹 "StarYAM Edition Showcase.fcpx"<br>
+                        Durée : 03:45<br>
+                        Résolution : 8K ProRes<br>
+                        FPS : 120</p>
+                    </div>
+                    <p>Performance de rendu : <strong>10x plus rapide</strong> avec RTX 6090 Super</p>
+                `
+            },
+            'hyperos-settings': {
+                title: 'HyperOS Settings',
+                content: `
+                    <h2>Paramètres HyperOS</h2>
+                    <div style="space-y: 15px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h3>🎨 Personnalisation</h3>
+                            <p>Thème : StarYAM Dark<br>Accent : Bleu/Orange gradient</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h3>⚡ Performance</h3>
+                            <p>Mode : Ultra Performance<br>GPU Boost : Activé<br>RAM : 128GB DDR6</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h3>🔐 Sécurité</h3>
+                            <p>Face ID : Activé<br>Chiffrement : AES-512<br>VPN : StarYAM Secure</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h3>🎵 Audio</h3>
+                            <p>Musique de fond : Windows Error Remix<br>
+                            <button onclick="window.toggleAudioFromApp()" style="margin-top: 10px; padding: 5px 15px; background: rgba(255,105,0,0.3); border: 1px solid rgba(255,105,0,0.5); border-radius: 5px; color: white; cursor: pointer;">
+                                Activer/Désactiver la musique
+                            </button></p>
+                        </div>
+                    </div>
+                `
+            },
+            'app-store': {
+                title: 'App Store',
+                content: `
+                    <h2>App Store - Des millions d'apps optimisées</h2>
+                    <p>Découvrez les meilleures applications pour MacOS 16 x HyperOS 3</p>
+                    <div style="margin: 20px 0;">
+                        <h3>🔥 Tendances</h3>
+                        <div style="background: rgba(0,122,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>HyperOS Tools Pro</strong><br>
+                            Utilitaires système avancés - Gratuit
+                        </div>
+                        <div style="background: rgba(0,122,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>StarYAM Creator Suite</strong><br>
+                            Création de contenu IA - 49,99€
+                        </div>
+                        <div style="background: rgba(0,122,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Fusion Gaming Hub</strong><br>
+                            Jeux RTX optimisés - Gratuit
+                        </div>
+                    </div>
+                `
+            },
+            'mishare': {
+                title: 'MiShare',
+                content: `
+                    <h2>MiShare - Partage Ultra Rapide</h2>
+                    <p>Transférez des fichiers à la vitesse de la lumière entre tous vos appareils</p>
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="width: 150px; height: 150px; margin: 0 auto; background: linear-gradient(45deg, #FF6900, #007AFF); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 60px;">
+                            📤
+                        </div>
+                        <p style="margin-top: 20px;">Glissez vos fichiers ici</p>
+                    </div>
+                    <p>Vitesse de transfert : <strong>10 Gbps</strong><br>
+                    Appareils à proximité : iPhone 16 Pro Max, Mi Pad 7</p>
+                `
+            },
+            'terminal': {
+                title: 'Terminal',
+                content: `
+                    <h2>Terminal - StarYAM Shell</h2>
+                    <div style="background: black; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; color: #00ff00;">
+                        <p>StarYAM-MacOS:~ adel$ system_info</p>
+                        <p>System: MacOS 16 x HyperOS 3 - StarYAM Edition</p>
+                        <p>CPU: Apple M5 Ultra Fusion @ 5.0GHz</p>
+                        <p>GPU: NVIDIA RTX 6090 Super 48GB</p>
+                        <p>RAM: 128GB DDR6 @ 8400MHz</p>
+                        <p>Storage: 8TB NVMe Gen5</p>
+                        <p>Uptime: 42 days, 13:37:00</p>
+                        <p><br>StarYAM-MacOS:~ adel$ <span style="animation: blink 1s infinite;">_</span></p>
+                    </div>
+                    <style>
+                        @keyframes blink {
+                            0%, 50% { opacity: 1; }
+                            51%, 100% { opacity: 0; }
+                        }
+                    </style>
+                `
+            },
+            'music': {
+                title: 'Music',
+                content: `
+                    <h2>Music - Votre Univers Musical</h2>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="width: 200px; height: 200px; margin: 0 auto; background: linear-gradient(45deg, #FA2D48, #F95C87); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 80px;">
+                            🎵
+                        </div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                        <h3>En cours de lecture</h3>
+                        <p><strong>Windows Error Remix</strong><br>
+                        Artiste : StarYAM Sound<br>
+                        Album : Fusion Beats<br>
+                        Qualité : Lossless 24-bit/192kHz</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <p>Volume</p>
+                        <input type="range" id="volumeControl" min="0" max="100" value="50" style="width: 100%; margin: 10px 0;">
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <button onclick="window.toggleAudioFromApp()" style="padding: 10px 20px; background: linear-gradient(45deg, #FA2D48, #F95C87); border: none; border-radius: 8px; color: white; cursor: pointer;">
+                                ⏯️ Play/Pause
+                            </button>
+                        </div>
+                    </div>
+                    <p style="margin-top: 20px;">Audio spatial Dolby Atmos activé</p>
+                `
             }
+        };
+
+        // Fonction pour ouvrir une application
+        function openApp(appName) {
+            const window = document.getElementById('appWindow');
+            const overlay = document.getElementById('overlay');
+            const title = document.getElementById('windowTitle');
+            const content = document.getElementById('windowContent');
+            
+            const appData = appContents[appName];
+            if (appData) {
+                title.textContent = appData.title;
+                content.innerHTML = appData.content;
+                
+                overlay.classList.add('active');
+                window.classList.add('active');
+            }
+        }
+
+        // Fonction pour fermer l'application
+        function closeApp() {
+            const window = document.getElementById('appWindow');
+            const overlay = document.getElementById('overlay');
+            
+            window.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Attacher les événements de clic aux applications
+        document.addEventListener('DOMContentLoaded', function() {
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Effet de clic
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        const appName = this.getAttribute('data-app');
+                        openApp(appName);
+                    }, 100);
+                });
+            });
+            
+            // Fermer la fenêtre en cliquant sur l'overlay
+            document.getElementById('overlay').addEventListener('click', closeApp);
+            
+            // Fermer avec la touche Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeApp();
+                }
+            });
         });
     </script>
 </body>
