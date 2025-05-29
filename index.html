@@ -479,13 +479,251 @@
         .overlay.active {
             display: block;
         }
+
+        /* Styles pour les jeux */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* Tic Tac Toe */
+        .tictactoe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            margin: 20px auto;
+        }
+
+        .tictactoe-cell {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tictactoe-cell:hover {
+            background: rgba(0, 122, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .tictactoe-cell.x {
+            color: var(--accent-blue);
+        }
+
+        .tictactoe-cell.o {
+            color: var(--accent-orange);
+        }
+
+        /* 2048 */
+        .game2048-board {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(4, 80px);
+            grid-template-rows: repeat(4, 80px);
+            gap: 10px;
+            margin: 20px auto;
+        }
+
+        .game2048-tile {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .game2048-tile[data-value="2"] { background: rgba(238, 228, 218, 0.8); color: #776e65; }
+        .game2048-tile[data-value="4"] { background: rgba(237, 224, 200, 0.8); color: #776e65; }
+        .game2048-tile[data-value="8"] { background: rgba(242, 177, 121, 0.8); color: #f9f6f2; }
+        .game2048-tile[data-value="16"] { background: rgba(245, 149, 99, 0.8); color: #f9f6f2; }
+        .game2048-tile[data-value="32"] { background: rgba(246, 124, 95, 0.8); color: #f9f6f2; }
+        .game2048-tile[data-value="64"] { background: rgba(246, 94, 59, 0.8); color: #f9f6f2; }
+        .game2048-tile[data-value="128"] { background: rgba(237, 207, 114, 0.8); color: #f9f6f2; font-size: 20px; }
+        .game2048-tile[data-value="256"] { background: rgba(237, 204, 97, 0.8); color: #f9f6f2; font-size: 20px; }
+        .game2048-tile[data-value="512"] { background: rgba(237, 200, 80, 0.8); color: #f9f6f2; font-size: 20px; }
+        .game2048-tile[data-value="1024"] { background: rgba(237, 197, 63, 0.8); color: #f9f6f2; font-size: 18px; }
+        .game2048-tile[data-value="2048"] { background: rgba(237, 194, 46, 0.8); color: #f9f6f2; font-size: 18px; }
+
+        /* Connect 4 */
+        .connect4-board {
+            background: #1e3a8a;
+            border-radius: 10px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(7, 60px);
+            grid-template-rows: repeat(6, 60px);
+            gap: 5px;
+            margin: 20px auto;
+        }
+
+        .connect4-cell {
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .connect4-cell:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .connect4-cell.red {
+            background: #ef4444;
+        }
+
+        .connect4-cell.yellow {
+            background: #eab308;
+        }
+
+        /* Snake */
+        .snake-board {
+            width: 400px;
+            height: 400px;
+            background: #111;
+            border: 2px solid var(--glass-border);
+            border-radius: 10px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .snake-segment {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #4ade80;
+            border-radius: 4px;
+        }
+
+        .snake-food {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+
+        /* Tetris */
+        .tetris-board {
+            width: 300px;
+            height: 600px;
+            background: #000;
+            border: 2px solid var(--glass-border);
+            border-radius: 10px;
+            position: relative;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(20, 30px);
+        }
+
+        .tetris-block {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tetris-block.filled {
+            background: var(--accent-blue);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Memory Game */
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+            gap: 10px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-blue);
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-orange));
+        }
+
+        .memory-card.matched {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* Game controls */
+        .game-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .game-button {
+            padding: 10px 30px;
+            margin: 0 10px;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-orange));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        .game-score {
+            font-size: 18px;
+            margin: 10px 0;
+            color: var(--text-primary);
+        }
+
+        .game-message {
+            font-size: 20px;
+            margin: 10px 0;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body>
     <!-- Musique de fond avec plusieurs formats pour compatibilité -->
     <audio id="backgroundMusic" loop preload="auto">
-        <source src="https://raw.githubusercontent.com/AdelWolf5/super-marques-fusion/refs/heads/main/Windows%20Error%20Remix.mp3" type="audio/mpeg">
-        <source src="https://raw.githubusercontent.com/AdelWolf5/super-marques-fusion/refs/heads/main/Windows%20Error%20Remix.mp3" type="audio/mp3">
+        <source src="https://github.com/AdelWolf5/MacOS-16-x-HyperOS-3/raw/refs/heads/main/Silhouettes%20(Original%20Mix).mp3" type="audio/mpeg">
+        <source src="https://github.com/AdelWolf5/MacOS-16-x-HyperOS-3/raw/refs/heads/main/Silhouettes%20(Original%20Mix).mp3" type="audio/mp3">
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
 
@@ -573,6 +811,37 @@
             </div>
         </div>
 
+        <!-- Section Jeux -->
+        <div class="apps-section fade-in">
+            <h2 class="apps-title">Jeux</h2>
+            <div class="apps-grid">
+                <div class="app-card" data-app="tictactoe">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #3B82F6, #8B5CF6);">❌</div>
+                    <div class="app-name">Tic Tac Toe</div>
+                </div>
+                <div class="app-card" data-app="game2048">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #F59E0B, #EF4444);">🔢</div>
+                    <div class="app-name">2048</div>
+                </div>
+                <div class="app-card" data-app="connect4">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #EF4444, #F59E0B);">🔴</div>
+                    <div class="app-name">Puissance 4</div>
+                </div>
+                <div class="app-card" data-app="snake">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #10B981, #34D399);">🐍</div>
+                    <div class="app-name">Snake</div>
+                </div>
+                <div class="app-card" data-app="tetris">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #6366F1, #A78BFA);">🧱</div>
+                    <div class="app-name">Tetris</div>
+                </div>
+                <div class="app-card" data-app="memory">
+                    <div class="app-icon" style="background: linear-gradient(45deg, #EC4899, #F472B6);">🧠</div>
+                    <div class="app-name">Memory</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Section Gemini AI -->
         <div class="gemini-section fade-in">
             <h2 class="gemini-title">Assistant StarYAM AI</h2>
@@ -609,6 +878,7 @@
         <div class="dock-item" style="background: linear-gradient(45deg, #B620E0, #F7B500);" onclick="openApp('final-cut')">🎬</div>
         <div class="dock-item" style="background: linear-gradient(45deg, #000000, #333333);" onclick="openApp('terminal')">💻</div>
         <div class="dock-item" style="background: linear-gradient(45deg, #FA2D48, #F95C87);" onclick="openApp('music')">🎵</div>
+        <div class="dock-item" style="background: linear-gradient(45deg, #3B82F6, #8B5CF6);" onclick="openApp('tictactoe')">🎮</div>
     </div>
 
     <script>
@@ -639,6 +909,53 @@
                     audioControl.textContent = '🔊';
                     audioControl.title = 'Cliquez pour couper la musique';
                     audioPlaying = true;
+                    
+                    // Afficher une notification de lecture
+                    const musicNotif = document.createElement('div');
+                    musicNotif.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        left: 20px;
+                        background: linear-gradient(135deg, rgba(250, 45, 72, 0.9), rgba(249, 92, 135, 0.9));
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+                        z-index: 3000;
+                        animation: slideInLeft 0.5s ease-out;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    `;
+                    musicNotif.innerHTML = `
+                        <span style="font-size: 20px;">🎵</span>
+                        <div>
+                            <strong>Silhouettes (Original Mix)</strong><br>
+                            <small style="opacity: 0.8;">En cours de lecture...</small>
+                        </div>
+                    `;
+                    document.body.appendChild(musicNotif);
+                    
+                    // Animation
+                    const slideStyle = document.createElement('style');
+                    slideStyle.textContent = `
+                        @keyframes slideInLeft {
+                            from {
+                                transform: translateX(-100%);
+                                opacity: 0;
+                            }
+                            to {
+                                transform: translateX(0);
+                                opacity: 1;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(slideStyle);
+                    
+                    setTimeout(() => {
+                        musicNotif.style.animation = 'slideInLeft 0.5s ease-out reverse';
+                        setTimeout(() => musicNotif.remove(), 500);
+                    }, 3000);
                 }).catch(error => {
                     console.error('Erreur de lecture audio:', error);
                     // Afficher un message d'erreur temporaire
@@ -708,6 +1025,7 @@
                 backgroundMusic.volume = e.target.value / 100;
             }
         });
+
         async function sendToGemini() {
             const input = document.getElementById('geminiInput');
             const response = document.getElementById('geminiResponse');
@@ -745,13 +1063,20 @@
                     // Autres
                     'météo': "Avec cette interface futuriste, même la pluie semble plus belle ! ☀️ Température optimale pour coder : 21°C",
                     'heure': `Il est actuellement ${new Date().toLocaleTimeString('fr-FR')}. Le temps file quand on utilise une belle interface !`,
-                    'musique': "J'espère que vous appréciez le Windows Error Remix en fond ! Un classique revisité pour cette édition StarYAM 🎵",
+                    'musique': "J'espère que vous appréciez 'Silhouettes (Original Mix)' en fond ! Une mélodie parfaite pour cette édition StarYAM 🎵",
                     'applications': "Vous avez accès à Safari, Mi Control, Final Cut Pro, HyperOS Settings, App Store, MiShare, Terminal et Music. Que de possibilités !",
                     'conseil': "Mon conseil du jour : Profitez de la puissance de votre M5 Ultra Fusion pour créer des choses extraordinaires !",
                     'motivation': "Vous êtes sur la meilleure fusion OS jamais créée ! Avec MacOS 16 x HyperOS 3, rien n'est impossible ! 🚀",
                     'technologie': "La fusion MacOS x HyperOS représente le futur : l'élégance d'Apple combinée à l'innovation de Xiaomi. Une révolution !",
                     'adel': "Adel a créé quelque chose d'extraordinaire avec cette interface StarYAM Edition ! Un vrai visionnaire du design futuriste ! ⭐",
                     'starYAM': "StarYAM Edition - Où la technologie rencontre l'art. Une création unique qui repousse les limites du possible !",
+                    'jeux': "Découvrez notre collection de jeux classiques : Tic Tac Toe, 2048, Puissance 4, Snake, Tetris et Memory ! Tous optimisés pour votre expérience StarYAM.",
+                    'tic tac toe': "Le Tic Tac Toe est maintenant disponible ! Un classique intemporel avec une interface moderne. Défiez l'IA !",
+                    '2048': "Le jeu 2048 vous attend ! Combinez les tuiles pour atteindre 2048. Addictif et stimulant !",
+                    'puissance 4': "Puissance 4 est prêt ! Alignez 4 jetons de votre couleur pour gagner. Stratégie pure !",
+                    'snake': "Snake est chargé ! Guidez le serpent et mangez les pommes. Un classique des années 90 revisité !",
+                    'tetris': "Tetris vous attend ! Empilez les blocs et faites des lignes. Le puzzle game ultime !",
+                    'memory': "Memory est disponible ! Testez votre mémoire en trouvant les paires. Parfait pour l'entraînement cérébral !"
                 };
 
                 // Recherche intelligente dans les réponses
@@ -817,6 +1142,518 @@
                 }, index * 100);
             });
         });
+
+        // Variables globales pour les jeux
+        let currentGame = null;
+        let gameState = {};
+
+        // Tic Tac Toe Logic
+        function initTicTacToe() {
+            gameState = {
+                board: Array(9).fill(null),
+                currentPlayer: 'X',
+                winner: null,
+                gameOver: false
+            };
+            renderTicTacToe();
+        }
+
+        function renderTicTacToe() {
+            const content = `
+                <div class="game-container">
+                    <h2>Tic Tac Toe</h2>
+                    <div class="game-message">${gameState.winner ? `${gameState.winner} a gagné !` : (gameState.gameOver ? 'Match nul !' : `Au tour de ${gameState.currentPlayer}`)}</div>
+                    <div class="tictactoe-board" id="tictactoe-board">
+                        ${gameState.board.map((cell, index) => `
+                            <div class="tictactoe-cell ${cell ? cell.toLowerCase() : ''}" onclick="tictactoeMove(${index})">${cell || ''}</div>
+                        `).join('')}
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="initTicTacToe()">Nouvelle partie</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        function tictactoeMove(index) {
+            if (gameState.board[index] || gameState.gameOver) return;
+            
+            gameState.board[index] = gameState.currentPlayer;
+            
+            if (checkTicTacToeWinner()) {
+                gameState.winner = gameState.currentPlayer;
+                gameState.gameOver = true;
+            } else if (gameState.board.every(cell => cell)) {
+                gameState.gameOver = true;
+            } else {
+                gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
+                // IA simple pour O
+                if (gameState.currentPlayer === 'O' && !gameState.gameOver) {
+                    setTimeout(() => {
+                        const emptyCells = gameState.board.map((cell, i) => cell === null ? i : null).filter(i => i !== null);
+                        if (emptyCells.length > 0) {
+                            const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                            tictactoeMove(randomIndex);
+                        }
+                    }, 500);
+                }
+            }
+            
+            renderTicTacToe();
+        }
+
+        function checkTicTacToeWinner() {
+            const lines = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertical
+                [0, 4, 8], [2, 4, 6] // Diagonal
+            ];
+            
+            return lines.some(line => {
+                const [a, b, c] = line;
+                return gameState.board[a] && gameState.board[a] === gameState.board[b] && gameState.board[a] === gameState.board[c];
+            });
+        }
+
+        window.tictactoeMove = tictactoeMove;
+        window.initTicTacToe = initTicTacToe;
+
+        // 2048 Logic
+        function init2048() {
+            gameState = {
+                board: Array(4).fill().map(() => Array(4).fill(0)),
+                score: 0,
+                gameOver: false
+            };
+            addNew2048Tile();
+            addNew2048Tile();
+            render2048();
+        }
+
+        function render2048() {
+            const content = `
+                <div class="game-container">
+                    <h2>2048</h2>
+                    <div class="game-score">Score: ${gameState.score}</div>
+                    ${gameState.gameOver ? '<div class="game-message">Game Over!</div>' : ''}
+                    <div class="game2048-board">
+                        ${gameState.board.flat().map(value => `
+                            <div class="game2048-tile" ${value ? `data-value="${value}"` : ''}>${value || ''}</div>
+                        `).join('')}
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="init2048()">Nouvelle partie</button>
+                        <p style="margin-top: 10px;">Utilisez les flèches du clavier pour jouer</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        function addNew2048Tile() {
+            const emptyCells = [];
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    if (gameState.board[i][j] === 0) {
+                        emptyCells.push({ x: i, y: j });
+                    }
+                }
+            }
+            if (emptyCells.length > 0) {
+                const { x, y } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                gameState.board[x][y] = Math.random() < 0.9 ? 2 : 4;
+            }
+        }
+
+        function move2048(direction) {
+            if (gameState.gameOver) return;
+            
+            let moved = false;
+            const newBoard = gameState.board.map(row => [...row]);
+            
+            if (direction === 'left' || direction === 'right') {
+                for (let i = 0; i < 4; i++) {
+                    let row = newBoard[i];
+                    if (direction === 'right') row = row.reverse();
+                    
+                    // Move tiles
+                    row = row.filter(val => val !== 0);
+                    
+                    // Merge tiles
+                    for (let j = 0; j < row.length - 1; j++) {
+                        if (row[j] === row[j + 1]) {
+                            row[j] *= 2;
+                            gameState.score += row[j];
+                            row.splice(j + 1, 1);
+                        }
+                    }
+                    
+                    // Fill with zeros
+                    while (row.length < 4) row.push(0);
+                    
+                    if (direction === 'right') row = row.reverse();
+                    
+                    if (row.join(',') !== gameState.board[i].join(',')) moved = true;
+                    newBoard[i] = row;
+                }
+            } else {
+                // Transpose for up/down movement
+                for (let j = 0; j < 4; j++) {
+                    let col = [];
+                    for (let i = 0; i < 4; i++) {
+                        col.push(newBoard[i][j]);
+                    }
+                    
+                    if (direction === 'down') col = col.reverse();
+                    
+                    // Move tiles
+                    col = col.filter(val => val !== 0);
+                    
+                    // Merge tiles
+                    for (let i = 0; i < col.length - 1; i++) {
+                        if (col[i] === col[i + 1]) {
+                            col[i] *= 2;
+                            gameState.score += col[i];
+                            col.splice(i + 1, 1);
+                        }
+                    }
+                    
+                    // Fill with zeros
+                    while (col.length < 4) col.push(0);
+                    
+                    if (direction === 'down') col = col.reverse();
+                    
+                    for (let i = 0; i < 4; i++) {
+                        if (col[i] !== gameState.board[i][j]) moved = true;
+                        newBoard[i][j] = col[i];
+                    }
+                }
+            }
+            
+            if (moved) {
+                gameState.board = newBoard;
+                addNew2048Tile();
+                
+                // Check game over
+                if (!canMove2048()) {
+                    gameState.gameOver = true;
+                }
+                
+                render2048();
+            }
+        }
+
+        function canMove2048() {
+            // Check for empty cells
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    if (gameState.board[i][j] === 0) return true;
+                    
+                    // Check adjacent cells
+                    if (i < 3 && gameState.board[i][j] === gameState.board[i + 1][j]) return true;
+                    if (j < 3 && gameState.board[i][j] === gameState.board[i][j + 1]) return true;
+                }
+            }
+            return false;
+        }
+
+        window.init2048 = init2048;
+
+        // Connect 4 Logic
+        function initConnect4() {
+            gameState = {
+                board: Array(6).fill().map(() => Array(7).fill(null)),
+                currentPlayer: 'red',
+                winner: null,
+                gameOver: false
+            };
+            renderConnect4();
+        }
+
+        function renderConnect4() {
+            const content = `
+                <div class="game-container">
+                    <h2>Puissance 4</h2>
+                    <div class="game-message">${gameState.winner ? `${gameState.winner === 'red' ? 'Rouge' : 'Jaune'} a gagné !` : `Au tour de ${gameState.currentPlayer === 'red' ? 'Rouge' : 'Jaune'}`}</div>
+                    <div class="connect4-board">
+                        ${gameState.board.flat().map((cell, index) => {
+                            const row = Math.floor(index / 7);
+                            const col = index % 7;
+                            return `<div class="connect4-cell ${cell || ''}" onclick="connect4Move(${col})"></div>`;
+                        }).join('')}
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="initConnect4()">Nouvelle partie</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        function connect4Move(col) {
+            if (gameState.gameOver) return;
+            
+            // Find the lowest empty row in the column
+            for (let row = 5; row >= 0; row--) {
+                if (!gameState.board[row][col]) {
+                    gameState.board[row][col] = gameState.currentPlayer;
+                    
+                    if (checkConnect4Winner(row, col)) {
+                        gameState.winner = gameState.currentPlayer;
+                        gameState.gameOver = true;
+                    } else {
+                        gameState.currentPlayer = gameState.currentPlayer === 'red' ? 'yellow' : 'red';
+                    }
+                    
+                    renderConnect4();
+                    break;
+                }
+            }
+        }
+
+        function checkConnect4Winner(row, col) {
+            const player = gameState.board[row][col];
+            
+            // Check horizontal
+            let count = 1;
+            for (let i = col - 1; i >= 0 && gameState.board[row][i] === player; i--) count++;
+            for (let i = col + 1; i < 7 && gameState.board[row][i] === player; i++) count++;
+            if (count >= 4) return true;
+            
+            // Check vertical
+            count = 1;
+            for (let i = row + 1; i < 6 && gameState.board[i][col] === player; i++) count++;
+            if (count >= 4) return true;
+            
+            // Check diagonal (top-left to bottom-right)
+            count = 1;
+            for (let i = 1; row - i >= 0 && col - i >= 0 && gameState.board[row - i][col - i] === player; i++) count++;
+            for (let i = 1; row + i < 6 && col + i < 7 && gameState.board[row + i][col + i] === player; i++) count++;
+            if (count >= 4) return true;
+            
+            // Check diagonal (bottom-left to top-right)
+            count = 1;
+            for (let i = 1; row + i < 6 && col - i >= 0 && gameState.board[row + i][col - i] === player; i++) count++;
+            for (let i = 1; row - i >= 0 && col + i < 7 && gameState.board[row - i][col + i] === player; i++) count++;
+            if (count >= 4) return true;
+            
+            return false;
+        }
+
+        window.connect4Move = connect4Move;
+        window.initConnect4 = initConnect4;
+
+        // Snake Logic
+        function initSnake() {
+            gameState = {
+                snake: [{ x: 10, y: 10 }],
+                direction: { x: 1, y: 0 },
+                food: generateFood(),
+                score: 0,
+                gameOver: false,
+                gameLoop: null
+            };
+            renderSnake();
+            startSnakeGame();
+        }
+
+        function generateFood() {
+            return {
+                x: Math.floor(Math.random() * 20),
+                y: Math.floor(Math.random() * 20)
+            };
+        }
+
+        function renderSnake() {
+            const content = `
+                <div class="game-container">
+                    <h2>Snake</h2>
+                    <div class="game-score">Score: ${gameState.score}</div>
+                    ${gameState.gameOver ? '<div class="game-message">Game Over!</div>' : ''}
+                    <div class="snake-board" id="snake-board">
+                        ${gameState.snake.map(segment => `
+                            <div class="snake-segment" style="left: ${segment.x * 20}px; top: ${segment.y * 20}px;"></div>
+                        `).join('')}
+                        <div class="snake-food" style="left: ${gameState.food.x * 20}px; top: ${gameState.food.y * 20}px;"></div>
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="initSnake()">Nouvelle partie</button>
+                        <p style="margin-top: 10px;">Utilisez les flèches du clavier pour jouer</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        function startSnakeGame() {
+            if (gameState.gameLoop) clearInterval(gameState.gameLoop);
+            
+            gameState.gameLoop = setInterval(() => {
+                if (!gameState.gameOver) {
+                    moveSnake();
+                }
+            }, 100);
+        }
+
+        function moveSnake() {
+            const head = { ...gameState.snake[0] };
+            head.x += gameState.direction.x;
+            head.y += gameState.direction.y;
+            
+            // Check walls
+            if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20) {
+                gameState.gameOver = true;
+                clearInterval(gameState.gameLoop);
+                renderSnake();
+                return;
+            }
+            
+            // Check self collision
+            if (gameState.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                gameState.gameOver = true;
+                clearInterval(gameState.gameLoop);
+                renderSnake();
+                return;
+            }
+            
+            gameState.snake.unshift(head);
+            
+            // Check food
+            if (head.x === gameState.food.x && head.y === gameState.food.y) {
+                gameState.score += 10;
+                gameState.food = generateFood();
+            } else {
+                gameState.snake.pop();
+            }
+            
+            renderSnake();
+        }
+
+        window.initSnake = initSnake;
+
+        // Memory Logic
+        function initMemory() {
+            const emojis = ['🍎', '🍊', '🍋', '🍇', '🍓', '🍑', '🍒', '🥝'];
+            const cards = [...emojis, ...emojis];
+            
+            // Shuffle cards
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            gameState = {
+                cards: cards.map((emoji, index) => ({
+                    id: index,
+                    emoji: emoji,
+                    flipped: false,
+                    matched: false
+                })),
+                firstCard: null,
+                secondCard: null,
+                moves: 0,
+                matches: 0,
+                processing: false
+            };
+            
+            renderMemory();
+        }
+
+        function renderMemory() {
+            const content = `
+                <div class="game-container">
+                    <h2>Memory</h2>
+                    <div class="game-score">Coups: ${gameState.moves} | Paires: ${gameState.matches}/8</div>
+                    ${gameState.matches === 8 ? '<div class="game-message">Félicitations ! Vous avez gagné !</div>' : ''}
+                    <div class="memory-board">
+                        ${gameState.cards.map(card => `
+                            <div class="memory-card ${card.flipped || card.matched ? 'flipped' : ''} ${card.matched ? 'matched' : ''}" 
+                                 onclick="flipCard(${card.id})">
+                                ${card.flipped || card.matched ? card.emoji : '?'}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="initMemory()">Nouvelle partie</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        function flipCard(id) {
+            if (gameState.processing) return;
+            
+            const card = gameState.cards[id];
+            if (card.flipped || card.matched) return;
+            
+            card.flipped = true;
+            
+            if (!gameState.firstCard) {
+                gameState.firstCard = card;
+            } else if (!gameState.secondCard) {
+                gameState.secondCard = card;
+                gameState.moves++;
+                
+                if (gameState.firstCard.emoji === gameState.secondCard.emoji) {
+                    gameState.firstCard.matched = true;
+                    gameState.secondCard.matched = true;
+                    gameState.matches++;
+                    gameState.firstCard = null;
+                    gameState.secondCard = null;
+                } else {
+                    gameState.processing = true;
+                    setTimeout(() => {
+                        gameState.firstCard.flipped = false;
+                        gameState.secondCard.flipped = false;
+                        gameState.firstCard = null;
+                        gameState.secondCard = null;
+                        gameState.processing = false;
+                        renderMemory();
+                    }, 1000);
+                }
+            }
+            
+            renderMemory();
+        }
+
+        window.flipCard = flipCard;
+        window.initMemory = initMemory;
+
+        // Tetris Logic (simplified)
+        function initTetris() {
+            gameState = {
+                board: Array(20).fill().map(() => Array(10).fill(0)),
+                currentPiece: null,
+                score: 0,
+                lines: 0,
+                gameOver: false,
+                gameLoop: null
+            };
+            renderTetris();
+        }
+
+        function renderTetris() {
+            const content = `
+                <div class="game-container">
+                    <h2>Tetris</h2>
+                    <div class="game-score">Score: ${gameState.score || 0} | Lignes: ${gameState.lines || 0}</div>
+                    <div class="tetris-board">
+                        ${Array(200).fill().map((_, i) => `
+                            <div class="tetris-block ${gameState.board && gameState.board[Math.floor(i/10)][i%10] ? 'filled' : ''}"></div>
+                        `).join('')}
+                    </div>
+                    <div class="game-controls">
+                        <button class="game-button" onclick="initTetris()">Nouvelle partie</button>
+                        <p style="margin-top: 10px;">Utilisez les flèches du clavier pour jouer</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('windowContent').innerHTML = content;
+        }
+
+        window.initTetris = initTetris;
 
         // Contenu des applications
         const appContents = {
@@ -894,7 +1731,7 @@
                         </div>
                         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">
                             <h3>🎵 Audio</h3>
-                            <p>Musique de fond : Windows Error Remix<br>
+                            <p>Musique de fond : Silhouettes (Original Mix)<br>
                             <button onclick="window.toggleAudioFromApp()" style="margin-top: 10px; padding: 5px 15px; background: rgba(255,105,0,0.3); border: 1px solid rgba(255,105,0,0.5); border-radius: 5px; color: white; cursor: pointer;">
                                 Activer/Désactiver la musique
                             </button></p>
@@ -972,7 +1809,7 @@
                     </div>
                     <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
                         <h3>En cours de lecture</h3>
-                        <p><strong>Windows Error Remix</strong><br>
+                        <p><strong>Silhouettes (Original Mix)</strong><br>
                         Artiste : StarYAM Sound<br>
                         Album : Fusion Beats<br>
                         Qualité : Lossless 24-bit/192kHz</p>
@@ -988,6 +1825,30 @@
                     </div>
                     <p style="margin-top: 20px;">Audio spatial Dolby Atmos activé</p>
                 `
+            },
+            'tictactoe': {
+                title: 'Tic Tac Toe',
+                init: initTicTacToe
+            },
+            'game2048': {
+                title: '2048',
+                init: init2048
+            },
+            'connect4': {
+                title: 'Puissance 4',
+                init: initConnect4
+            },
+            'snake': {
+                title: 'Snake',
+                init: initSnake
+            },
+            'tetris': {
+                title: 'Tetris',
+                init: initTetris
+            },
+            'memory': {
+                title: 'Memory',
+                init: initMemory
             }
         };
 
@@ -1001,7 +1862,13 @@
             const appData = appContents[appName];
             if (appData) {
                 title.textContent = appData.title;
-                content.innerHTML = appData.content;
+                
+                if (appData.init) {
+                    currentGame = appName;
+                    appData.init();
+                } else {
+                    content.innerHTML = appData.content;
+                }
                 
                 overlay.classList.add('active');
                 window.classList.add('active');
@@ -1013,9 +1880,66 @@
             const window = document.getElementById('appWindow');
             const overlay = document.getElementById('overlay');
             
+            // Clear game loops if any
+            if (gameState.gameLoop) {
+                clearInterval(gameState.gameLoop);
+            }
+            
             window.classList.remove('active');
             overlay.classList.remove('active');
+            currentGame = null;
         }
+
+        // Keyboard controls for games
+        document.addEventListener('keydown', (e) => {
+            if (currentGame === 'game2048') {
+                switch(e.key) {
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        move2048('up');
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        move2048('down');
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        move2048('left');
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        move2048('right');
+                        break;
+                }
+            } else if (currentGame === 'snake' && gameState.gameLoop) {
+                switch(e.key) {
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (gameState.direction.y === 0) {
+                            gameState.direction = { x: 0, y: -1 };
+                        }
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (gameState.direction.y === 0) {
+                            gameState.direction = { x: 0, y: 1 };
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        if (gameState.direction.x === 0) {
+                            gameState.direction = { x: -1, y: 0 };
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        if (gameState.direction.x === 0) {
+                            gameState.direction = { x: 1, y: 0 };
+                        }
+                        break;
+                }
+            }
+        });
 
         // Attacher les événements de clic aux applications
         document.addEventListener('DOMContentLoaded', function() {
